@@ -1,0 +1,7 @@
+[package]
+name = "geofence_prover"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+noir = { git = "https://github.com/zkmopro/noir-rs", features = ["barretenberg", "srs-downloader"] }

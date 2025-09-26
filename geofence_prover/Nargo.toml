@@ -1,0 +1,6 @@
+[package]
+name = "geofence_prover"
+type = "bin"
+authors = [""]
+
+[dependencies]
