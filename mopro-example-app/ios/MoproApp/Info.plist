@@ -1,0 +1,8 @@
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>please allow location sharing for proving your existence within the radius you specified</string>
+
+<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<dict>
+  <key>GeofenceProof</key>
+  <string>We need precise location once to generate a zero-knowledge proof of geofence presence.</string>
+</dict>
