@@ -1,0 +1,87 @@
+# Heavy files folder
+heavy_files/
+mopro
+.gitignore
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Rust
+target/
+Cargo.lock
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build artifacts
+build/
+dist/
+**/deps/
+**/build/
+**/target/
+*.o
+*.d
+*.rlib
+*.rmeta
+*.bin
+*.hpp
+*.d
+incremental/
+**/incremental/
+**/*.o
+**/*.d
+**/*.rlib
+**/*.rmeta
+**/*.bin
+**/*.hpp
+
+# iOS
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Generated files
+*.json
+*.srs
+*.vk
+*.zkey
+*.wasm
+*.cpp
+*.dat
+**/*.json
+**/*.srs
+**/*.vk
+**/*.zkey
+**/*.wasm
+**/*.cpp
+**/*.dat
+
+# Additional build patterns
+**/debug/
+**/release/
+**/deps/
+**/examples/
+**/*.a
+**/*.so
+**/*.dylib
+
+# Cache
+srs_cache/*.xcuserdata/
+*.xcuserdata/

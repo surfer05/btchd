@@ -91,7 +91,7 @@ struct ContentView: View {
         // If Approximate was granted, ask once for temporary precise using your purpose key (Info.plist)
         if CLLocationManager().accuracyAuthorization == .reducedAccuracy {
             await withCheckedContinuation { cc in
-                CLLocationManager().requestTemporaryFullAccuracyAuthorization(withPurposeKey: "GeofenceProof") { _ in cc.4resume(returning: ()) }
+                CLLocationManager().requestTemporaryFullAccuracyAuthorization(withPurposeKey: "GeofenceProof") { _ in cc.resume(returning: ()) }
             } // Apple’s API for one-time precise. :contentReference[oaicite:3]{index=3}
         }
 
