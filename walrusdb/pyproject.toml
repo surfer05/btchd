@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "walrusdb"
+version = "0.0.1"
+authors = [
+  { name="Nishkarsh Jain", email="nishkarsh1206@gmail.com" },
+]
+description = "A simple NoSQL database implemented in Python using walrus for storage"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+    "pydantic>=2.0.0",
+    "walrus-python==0.1.0",
+    "bson>=0.5.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["walrusdb"]
