@@ -1,10 +1,10 @@
-build_mode = "release"
+build_mode = "debug"
 target_adapters = ["noir"]
 target_platforms = ["ios"]
 ios = [
+    "x86_64-apple-ios",
     "aarch64-apple-ios",
     "aarch64-apple-ios-sim",
-    "x86_64-apple-ios",
 ]
 auto_update = false
 
