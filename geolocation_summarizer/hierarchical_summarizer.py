@@ -55,14 +55,16 @@ class HierarchicalGridSummarizer:
         self.grid_delta = grid_delta  # Grid cell size
         self.summary_provider = SummaryProviderFactory.create_provider(provider_type, api_key=api_key)
         
-    def load_data(self, json_path: str) -> List[Tag]:
+    def load_data(self, json_path: str = None, tags_data = None) -> List[Tag]:
         """Load tags from JSON file"""
-        print(f"📁 Loading data from: {json_path}")
-        with open(json_path, 'r') as f:
-            data = json.load(f)
+        if json_path is not None:
+            print(f"📁 Loading data from: {json_path}")
+            with open(json_path, 'r') as f:
+                data = json.load(f)
+            tags_data = data.get('tags', [])
         
         tags = []
-        for tag_data in data.get('tags', []):
+        for tag_data in tags_data:
             tag = Tag(
                 lat=float(tag_data['latitude']),
                 lon=float(tag_data['longitude']),
@@ -362,7 +364,7 @@ class HierarchicalGridSummarizer:
         return level_data
     
     
-    def save_results(self, levels: Dict[int, Dict[Tuple[int, int], GridCell]], output_file: str):
+    def save_results(self, levels: Dict[int, Dict[Tuple[int, int], GridCell]], output_file: str = None, dump: bool = False):
         """Save results to JSON file"""
         results = {
             "metadata": {
@@ -388,10 +390,13 @@ class HierarchicalGridSummarizer:
                 }
             results["levels"][str(level)] = level_info
         
-        with open(output_file, 'w') as f:
-            json.dump(results, f, indent=2)
-        
-        print(f"Results saved to {output_file}")
+        if dump:
+            with open(output_file, 'w') as f:
+                json.dump(results, f, indent=2)
+            
+            print(f"Results saved to {output_file}")
+        else:
+            return results
     
     async def update_with_new_tag(self, lat: float, lon: float, tag_text: str, 
                                  existing_results: dict, output_file: str = None) -> dict:
@@ -528,9 +533,9 @@ class HierarchicalGridSummarizer:
             print(f"\n💾 Updated results saved to {output_file}")
         
         return results
-    
-async def main():
-    """Main execution function"""
+
+def parse_args():
+    """Parse command-line arguments"""
     parser = argparse.ArgumentParser(description='Hierarchical Grid Summarizer')
     parser.add_argument('json_path', nargs='?', help='Path to JSON data file (not required for update mode)')
     parser.add_argument('--output', '-o', default='hierarchical_results.json', help='Output file path')
@@ -542,46 +547,34 @@ async def main():
     parser.add_argument('--max-lon', type=float, help='Maximum longitude for custom boundaries')
     parser.add_argument('--provider', choices=['openai', 'gemini'], default='openai', help='LLM provider to use (default: openai)')
     parser.add_argument('--batch-size', type=int, default=30, help='Batch size for API calls (default: 15)')
-    
+
     # Update mode arguments
     parser.add_argument('--update', action='store_true', help='Update mode: add new tag to existing results')
     parser.add_argument('--lat', type=float, help='Latitude for new tag (required for update mode)')
     parser.add_argument('--lon', type=float, help='Longitude for new tag (required for update mode)')
     parser.add_argument('--tag', type=str, help='Tag text for new tag (required for update mode)')
     parser.add_argument('--existing-results', help='Path to existing results file (required for update mode)')
-    
-    args = parser.parse_args()
-    
-    # Handle update mode
-    if args.update:
-        if not all([args.lat, args.lon, args.tag, args.existing_results]):
-            print("❌ Update mode requires --lat, --lon, --tag, and --existing-results")
-            return
-        
-        # Initialize summarizer
-        summarizer = HierarchicalGridSummarizer(
+
+    return parser.parse_args()
+
+async def update_summarizer(args):
+    summarizer = HierarchicalGridSummarizer(
             api_key=args.api_key, 
             grid_delta=0.01,  # Use default for updates
             provider_type=args.provider
         )
         
-        # Update with new tag
-        updated_results = await summarizer.update_with_new_tag(
-            lat=args.lat,
-            lon=args.lon,
-            tag_text=args.tag,
-            existing_results=args.existing_results,
-            output_file=args.output
-        )
-        
-        print("\n🎉 Update complete!")
-        return
-    
-    # Check if json_path is provided for normal mode
-    if not args.json_path:
-        print("❌ json_path is required for normal mode")
-        return
-    
+    # Update with new tag
+    updated_results = await summarizer.update_with_new_tag(
+        lat=args.lat,
+        lon=args.lon,
+        tag_text=args.tag,
+        existing_results=args.existing_results,
+        output_file=args.output
+    )
+    return updated_results
+
+async def summarize_data(args):
     print("🚀 Starting Hierarchical Grid Summarizer")
     print("=" * 50)
     
@@ -594,7 +587,7 @@ async def main():
     
     # Step a) Load data
     print("\n📋 Step a) Loading data...")
-    tags = summarizer.load_data(args.json_path)
+    tags = summarizer.load_data(tags_data=args.tags_data)
     
     # Step b) Define boundaries
     print("\n📍 Step b) Defining boundaries...")
@@ -656,10 +649,32 @@ async def main():
     
     # Save results
     print("\n💾 Saving results...")
-    summarizer.save_results(levels, args.output)
+    results = summarizer.save_results(levels)
     
     print("\n🎉 Hierarchical grid summarization complete!")
     print("=" * 50)
 
+    return results
+
+def main():
+    """Main execution function"""
+    args = parse_args()
+    
+    # Handle update mode
+    if args.update:
+        if not all([args.lat, args.lon, args.tag, args.existing_results]):
+            print("❌ Update mode requires --lat, --lon, --tag, and --existing-results")
+            return
+        
+        updated_data = asyncio.run(update_summarizer(args))
+        return updated_data
+
+    if not args.json_path:
+        print("❌ json_path is required for normal mode")
+        return
+    
+    return asyncio.run(summarize_data(args))
+    
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
