@@ -1,0 +1,1861 @@
+{
+  "metadata": {
+    "grid_delta": 0.01,
+    "total_levels": 4
+  },
+  "levels": {
+    "0": {
+      "19_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Exclusive area for sexy people."
+      },
+      "37_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.746082653849996,
+          "max_lat": 28.756082653849997,
+          "min_lon": 77.112052765221,
+          "max_lon": 77.12205276522099
+        },
+        "combined_tag": "Home for JEE failures."
+      },
+      "18_27": {
+        "kernel_boundaries": {
+          "min_lat": 28.556082653849998,
+          "max_lat": 28.566082653849996,
+          "min_lon": 77.24205276522099,
+          "max_lon": 77.252052765221
+        },
+        "combined_tag": "Territory for cool guys."
+      },
+      "18_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.556082653849998,
+          "max_lat": 28.566082653849996,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Delhi's SOBO kids' area."
+      },
+      "18_31": {
+        "kernel_boundaries": {
+          "min_lat": 28.556082653849998,
+          "max_lat": 28.566082653849996,
+          "min_lon": 77.28205276522098,
+          "max_lon": 77.29205276522099
+        },
+        "combined_tag": "Good food, many pickpockets."
+      },
+      "27_28": {
+        "kernel_boundaries": {
+          "min_lat": 28.646082653849998,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.252052765221,
+          "max_lon": 77.26205276522099
+        },
+        "combined_tag": "Designated public toilet area."
+      },
+      "15_29": {
+        "kernel_boundaries": {
+          "min_lat": 28.526082653849997,
+          "max_lat": 28.53608265385,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Area for military personnel."
+      },
+      "20_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.576082653849998,
+          "max_lat": 28.586082653849996,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Home of sigma females."
+      },
+      "16_29": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Area with terrible PG food."
+      },
+      "26_23": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Beware, risk of scamming."
+      },
+      "8_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.46608265385,
+          "min_lon": 77.06205276522098,
+          "max_lon": 77.07205276522099
+        },
+        "combined_tag": "Hated Lotus Valley area."
+      },
+      "10_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.082052765221,
+          "max_lon": 77.09205276522098
+        },
+        "combined_tag": "Posh and quiet area."
+      },
+      "26_39": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.362052765221,
+          "max_lon": 77.37205276522099
+        },
+        "combined_tag": "Predominantly Jaat community."
+      },
+      "29_15": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.12205276522099,
+          "max_lon": 77.13205276522099
+        },
+        "combined_tag": "West Delhi's posh South."
+      },
+      "32_29": {
+        "kernel_boundaries": {
+          "min_lat": 28.696082653849995,
+          "max_lat": 28.706082653849997,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Police residential colony."
+      },
+      "30_30": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.27205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Beware, area of pickpockets."
+      },
+      "34_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.71608265385,
+          "max_lat": 28.726082653849996,
+          "min_lon": 77.112052765221,
+          "max_lon": 77.12205276522099
+        },
+        "combined_tag": "Area infested with mosquitoes."
+      },
+      "29_29": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Beware of pickpockets."
+      },
+      "16_30": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.27205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Location named Owen Baldwin."
+      },
+      "13_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Military retirees, local characters."
+      },
+      "5_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.426082653849996,
+          "max_lat": 28.436082653849997,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Expressive, suggestive sounds heard."
+      },
+      "2_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.396082653849998,
+          "max_lat": 28.406082653849996,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Home of best bikes."
+      },
+      "25_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.06205276522098,
+          "max_lon": 77.07205276522099
+        },
+        "combined_tag": "Area of wise idiots."
+      },
+      "27_24": {
+        "kernel_boundaries": {
+          "min_lat": 28.646082653849998,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Unsafe area, prostitutes present."
+      },
+      "19_21": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Extremely crowded area."
+      },
+      "20_17": {
+        "kernel_boundaries": {
+          "min_lat": 28.576082653849998,
+          "max_lat": 28.586082653849996,
+          "min_lon": 77.142052765221,
+          "max_lon": 77.15205276522099
+        },
+        "combined_tag": "Government official residential area."
+      },
+      "10_30": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.27205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Area with posh houses."
+      },
+      "30_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.07205276522099,
+          "max_lon": 77.082052765221
+        },
+        "combined_tag": "Area for old guys."
+      },
+      "17_24": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Good for sports activities."
+      },
+      "9_0": {
+        "kernel_boundaries": {
+          "min_lat": 28.46608265385,
+          "max_lat": 28.476082653849996,
+          "min_lon": 76.972052765221,
+          "max_lon": 76.98205276522098
+        },
+        "combined_tag": "Extremely posh area."
+      },
+      "24_8": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.62608265385,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.06205276522098
+        },
+        "combined_tag": "Extremely crowded, no space."
+      },
+      "26_16": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.13205276522099,
+          "max_lon": 77.142052765221
+        },
+        "combined_tag": "Excellent, delightful place."
+      },
+      "26_22": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.19205276522099,
+          "max_lon": 77.20205276522098
+        },
+        "combined_tag": "Iconic, humorous landmark."
+      },
+      "12_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.496082653849996,
+          "max_lat": 28.506082653849997,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Premier shopping mall."
+      },
+      "13_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Adult rendezvous spot."
+      },
+      "7_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.446082653849995,
+          "max_lat": 28.456082653849997,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Upscale Gurgaon residential area."
+      },
+      "27_16": {
+        "kernel_boundaries": {
+          "min_lat": 28.646082653849998,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.13205276522099,
+          "max_lon": 77.142052765221
+        },
+        "combined_tag": "Local residents, Indian food."
+      },
+      "29_42": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.392052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Highly polluted urban area."
+      },
+      "29_20": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Global marijuana hub."
+      },
+      "17_32": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.29205276522099,
+          "max_lon": 77.30205276522099
+        },
+        "combined_tag": "Weed sales point."
+      },
+      "23_25": {
+        "kernel_boundaries": {
+          "min_lat": 28.606082653849995,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Top spot for 'coggs'."
+      },
+      "28_25": {
+        "kernel_boundaries": {
+          "min_lat": 28.656082653849996,
+          "max_lat": 28.666082653849998,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Crowded, confined, intense area."
+      },
+      "31_15": {
+        "kernel_boundaries": {
+          "min_lat": 28.686082653849997,
+          "max_lat": 28.696082653849995,
+          "min_lon": 77.12205276522099,
+          "max_lon": 77.13205276522099
+        },
+        "combined_tag": "Rani Bagh local market."
+      },
+      "38_23": {
+        "kernel_boundaries": {
+          "min_lat": 28.756082653849997,
+          "max_lat": 28.766082653849995,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Burari residential locality."
+      },
+      "7_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.446082653849995,
+          "max_lat": 28.456082653849997,
+          "min_lon": 77.002052765221,
+          "max_lon": 77.01205276522099
+        },
+        "combined_tag": "Boring, uninteresting place."
+      },
+      "25_24": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Beware of scams."
+      },
+      "17_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Rich girls' shopping area."
+      },
+      "22_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.596082653849997,
+          "max_lat": 28.606082653849995,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "South Delhi residential area."
+      },
+      "19_22": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.19205276522099,
+          "max_lon": 77.20205276522098
+        },
+        "combined_tag": "Cheap clothes shopping."
+      },
+      "21_20": {
+        "kernel_boundaries": {
+          "min_lat": 28.586082653849996,
+          "max_lat": 28.596082653849997,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Challenging place for students."
+      },
+      "12_21": {
+        "kernel_boundaries": {
+          "min_lat": 28.496082653849996,
+          "max_lat": 28.506082653849997,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Home of rich politicians."
+      },
+      "26_25": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Empty, unremarkable area."
+      },
+      "12_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.496082653849996,
+          "max_lat": 28.506082653849997,
+          "min_lon": 77.082052765221,
+          "max_lon": 77.09205276522098
+        },
+        "combined_tag": "Corporate IT drudgery hub."
+      },
+      "17_22": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.19205276522099,
+          "max_lon": 77.20205276522098
+        },
+        "combined_tag": "Vibrant party hub."
+      },
+      "30_34": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.31205276522098,
+          "max_lon": 77.32205276522099
+        },
+        "combined_tag": "Dangerous, beware area."
+      },
+      "11_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.486082653849998,
+          "max_lat": 28.496082653849996,
+          "min_lon": 77.082052765221,
+          "max_lon": 77.09205276522098
+        },
+        "combined_tag": "CyberCity office hub."
+      },
+      "19_25": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Relatively safe area."
+      },
+      "10_8": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.06205276522098
+        },
+        "combined_tag": "Military retired residential."
+      },
+      "11_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.486082653849998,
+          "max_lat": 28.496082653849996,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Work, power cuts, rentals."
+      },
+      "6_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.436082653849997,
+          "max_lat": 28.446082653849995,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Affluent area, Bawa's workplace."
+      },
+      "9_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.46608265385,
+          "max_lat": 28.476082653849996,
+          "min_lon": 77.10205276522099,
+          "max_lon": 77.112052765221
+        },
+        "combined_tag": "Rich residential area"
+      },
+      "30_23": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "K-Nag area"
+      },
+      "17_34": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.31205276522098,
+          "max_lon": 77.32205276522099
+        },
+        "combined_tag": "Residential area"
+      },
+      "5_8": {
+        "kernel_boundaries": {
+          "min_lat": 28.426082653849996,
+          "max_lat": 28.436082653849997,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.06205276522098
+        },
+        "combined_tag": "Poor residential area"
+      },
+      "21_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.586082653849996,
+          "max_lat": 28.596082653849997,
+          "min_lon": 77.01205276522099,
+          "max_lon": 77.02205276522099
+        },
+        "combined_tag": "Dangerous, avoid this area"
+      },
+      "0_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.386082653849996,
+          "min_lon": 77.02205276522099,
+          "max_lon": 77.03205276522098
+        },
+        "combined_tag": "Super rich residential area"
+      },
+      "8_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.46608265385,
+          "min_lon": 77.02205276522099,
+          "max_lon": 77.03205276522098
+        },
+        "combined_tag": "Rural village area"
+      },
+      "10_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Cheap guest accommodations"
+      },
+      "22_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.596082653849997,
+          "max_lat": 28.606082653849995,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Dense urban concrete jungle"
+      },
+      "26_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Print media business area"
+      },
+      "33_18": {
+        "kernel_boundaries": {
+          "min_lat": 28.706082653849997,
+          "max_lat": 28.71608265385,
+          "min_lon": 77.15205276522099,
+          "max_lon": 77.16205276522099
+        },
+        "combined_tag": "Poor residential area"
+      },
+      "23_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.606082653849995,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Adult entertainment, dubious clubs"
+      },
+      "16_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Perceived controversial area"
+      },
+      "24_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.62608265385,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Undefined, ambiguous area"
+      },
+      "27_20": {
+        "kernel_boundaries": {
+          "min_lat": 28.646082653849998,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Rich residential area"
+      },
+      "25_20": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Area of disrepute"
+      },
+      "21_21": {
+        "kernel_boundaries": {
+          "min_lat": 28.586082653849996,
+          "max_lat": 28.596082653849997,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Diplomatic area"
+      },
+      "31_23": {
+        "kernel_boundaries": {
+          "min_lat": 28.686082653849997,
+          "max_lat": 28.696082653849995,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "University, North Campus"
+      },
+      "14_23": {
+        "kernel_boundaries": {
+          "min_lat": 28.516082653849995,
+          "max_lat": 28.526082653849997,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Gym and fitness area"
+      },
+      "25_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Undefined, ambiguous area"
+      },
+      "26_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Hostile, negative area"
+      },
+      "13_26": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Poor residential area"
+      },
+      "23_27": {
+        "kernel_boundaries": {
+          "min_lat": 28.606082653849995,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.24205276522099,
+          "max_lon": 77.252052765221
+        },
+        "combined_tag": "Delhi entry point"
+      },
+      "16_27": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.24205276522099,
+          "max_lon": 77.252052765221
+        },
+        "combined_tag": "Bengali community area"
+      },
+      "13_28": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.252052765221,
+          "max_lon": 77.26205276522099
+        },
+        "combined_tag": "Awesome people live here"
+      },
+      "17_29": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Needs college, youth area"
+      },
+      "32_32": {
+        "kernel_boundaries": {
+          "min_lat": 28.696082653849995,
+          "max_lat": 28.706082653849997,
+          "min_lon": 77.29205276522099,
+          "max_lon": 77.30205276522099
+        },
+        "combined_tag": "Troublemakers, mischievous people"
+      },
+      "28_33": {
+        "kernel_boundaries": {
+          "min_lat": 28.656082653849996,
+          "max_lat": 28.666082653849998,
+          "min_lon": 77.30205276522099,
+          "max_lon": 77.31205276522098
+        },
+        "combined_tag": "Bihari community area"
+      },
+      "19_37": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.34205276522098,
+          "max_lon": 77.35205276522099
+        },
+        "combined_tag": "Politically neglected area"
+      },
+      "19_38": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.35205276522099,
+          "max_lon": 77.362052765221
+        },
+        "combined_tag": "Politically neglected area"
+      },
+      "24_39": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.62608265385,
+          "min_lon": 77.362052765221,
+          "max_lon": 77.37205276522099
+        },
+        "combined_tag": "Urban area with mixed social characteristics and community dynamics"
+      },
+      "17_42": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.392052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Diverse neighborhood showing varied demographic patterns"
+      },
+      "20_28": {
+        "kernel_boundaries": {
+          "min_lat": 28.576082653849998,
+          "max_lat": 28.586082653849996,
+          "min_lon": 77.252052765221,
+          "max_lon": 77.26205276522099
+        },
+        "combined_tag": "Mixed-use zone with different community groups"
+      },
+      "8_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.46608265385,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Urban area with contrasting social interactions"
+      },
+      "4_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.416082653849998,
+          "max_lat": 28.426082653849996,
+          "min_lon": 77.10205276522099,
+          "max_lon": 77.112052765221
+        },
+        "combined_tag": "Diverse neighborhood with varied social dynamics"
+      },
+      "11_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.486082653849998,
+          "max_lat": 28.496082653849996,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Mixed community area with different social patterns"
+      },
+      "16_21": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Urban zone with diverse social characteristics"
+      },
+      "15_24": {
+        "kernel_boundaries": {
+          "min_lat": 28.526082653849997,
+          "max_lat": 28.53608265385,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Community area with mixed social dynamics"
+      },
+      "0_38": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.386082653849996,
+          "min_lon": 77.35205276522099,
+          "max_lon": 77.362052765221
+        },
+        "combined_tag": "Diverse area with varied social patterns"
+      }
+    },
+    "1": {
+      "0_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.386082653849996,
+          "min_lon": 77.02205276522099,
+          "max_lon": 77.03205276522098
+        },
+        "combined_tag": "Urban area with mixed social characteristics and community dynamics"
+      },
+      "0_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.386082653849996,
+          "min_lon": 77.35205276522099,
+          "max_lon": 77.362052765221
+        },
+        "combined_tag": "Diverse neighborhood showing varied demographic patterns"
+      },
+      "1_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.396082653849998,
+          "max_lat": 28.406082653849996,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Mixed-use zone with different community groups"
+      },
+      "2_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.426082653849996,
+          "max_lat": 28.436082653849997,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Urban area with contrasting social interactions"
+      },
+      "2_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.426082653849996,
+          "max_lat": 28.436082653849997,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.06205276522098
+        },
+        "combined_tag": "Diverse neighborhood with varied social dynamics"
+      },
+      "2_6": {
+        "kernel_boundaries": {
+          "min_lat": 28.416082653849998,
+          "max_lat": 28.426082653849996,
+          "min_lon": 77.10205276522099,
+          "max_lon": 77.112052765221
+        },
+        "combined_tag": "Mixed community area with different social patterns"
+      },
+      "3_1": {
+        "kernel_boundaries": {
+          "min_lat": 28.446082653849995,
+          "max_lat": 28.456082653849997,
+          "min_lon": 77.002052765221,
+          "max_lon": 77.01205276522099
+        },
+        "combined_tag": "Urban zone with diverse social characteristics"
+      },
+      "3_6": {
+        "kernel_boundaries": {
+          "min_lat": 28.436082653849997,
+          "max_lat": 28.456082653849997,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Community area with mixed social dynamics"
+      },
+      "4_0": {
+        "kernel_boundaries": {
+          "min_lat": 28.46608265385,
+          "max_lat": 28.476082653849996,
+          "min_lon": 76.972052765221,
+          "max_lon": 76.98205276522098
+        },
+        "combined_tag": "Diverse area with varied social patterns"
+      },
+      "4_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.46608265385,
+          "min_lon": 77.02205276522099,
+          "max_lon": 77.03205276522098
+        },
+        "combined_tag": "Mixed neighborhood with different social interactions"
+      },
+      "4_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.46608265385,
+          "min_lon": 77.06205276522098,
+          "max_lon": 77.07205276522099
+        },
+        "combined_tag": "Urban zone with diverse community characteristics"
+      },
+      "4_6": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.476082653849996,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.112052765221
+        },
+        "combined_tag": "Community zone with mixed social dynamics"
+      },
+      "5_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Diverse neighborhood with varied social interactions"
+      },
+      "5_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.06205276522098
+        },
+        "combined_tag": "Mixed-use area with different community patterns"
+      },
+      "5_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.496082653849996,
+          "min_lon": 77.082052765221,
+          "max_lon": 77.09205276522098
+        },
+        "combined_tag": "Urban area with diverse social characteristics"
+      },
+      "5_6": {
+        "kernel_boundaries": {
+          "min_lat": 28.486082653849998,
+          "max_lat": 28.496082653849996,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Urban area with mixed social characteristics and community dynamics"
+      },
+      "5_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.486082653849998,
+          "max_lat": 28.496082653849996,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Diverse neighborhood showing varied demographic patterns"
+      },
+      "5_15": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.486082653849998,
+          "min_lon": 77.27205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Mixed-use zone with different community groups"
+      },
+      "6_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Urban area with contrasting social interactions"
+      },
+      "6_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.496082653849996,
+          "max_lat": 28.506082653849997,
+          "min_lon": 77.082052765221,
+          "max_lon": 77.09205276522098
+        },
+        "combined_tag": "Diverse neighborhood with varied social dynamics"
+      },
+      "6_6": {
+        "kernel_boundaries": {
+          "min_lat": 28.496082653849996,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Mixed community area with different social patterns"
+      },
+      "6_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.496082653849996,
+          "max_lat": 28.506082653849997,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Urban zone with diverse social characteristics"
+      },
+      "6_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Community area with mixed social dynamics"
+      },
+      "6_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.506082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.252052765221,
+          "max_lon": 77.26205276522099
+        },
+        "combined_tag": "Diverse area with varied social patterns"
+      },
+      "7_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.516082653849995,
+          "max_lat": 28.526082653849997,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Mixed neighborhood with different social interactions"
+      },
+      "7_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.526082653849997,
+          "max_lat": 28.53608265385,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Urban zone with diverse community characteristics"
+      },
+      "7_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.526082653849997,
+          "max_lat": 28.53608265385,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Community zone with mixed social dynamics"
+      },
+      "8_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Diverse neighborhood with varied social interactions"
+      },
+      "8_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Mixed-use area with different community patterns"
+      },
+      "8_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.19205276522099,
+          "max_lon": 77.20205276522098
+        },
+        "combined_tag": "Urban area with diverse social characteristics"
+      },
+      "8_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Sports activities area"
+      },
+      "8_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.252052765221
+        },
+        "combined_tag": "Bengali community, rich shopping"
+      },
+      "8_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Youth area, bad food"
+      },
+      "8_15": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.546082653849997,
+          "min_lon": 77.27205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Named Owen Baldwin"
+      },
+      "8_16": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.29205276522099,
+          "max_lon": 77.30205276522099
+        },
+        "combined_tag": "Weed sales point"
+      },
+      "8_17": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.31205276522098,
+          "max_lon": 77.32205276522099
+        },
+        "combined_tag": "Residential area"
+      },
+      "8_21": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.392052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Diverse neighborhood"
+      },
+      "9_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.18205276522099,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Extremely crowded area"
+      },
+      "9_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.19205276522099,
+          "max_lon": 77.20205276522098
+        },
+        "combined_tag": "Cheap clothes shopping"
+      },
+      "9_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Relatively safe area"
+      },
+      "9_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.556082653849998,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.252052765221
+        },
+        "combined_tag": "Exclusive cool youth area"
+      },
+      "9_15": {
+        "kernel_boundaries": {
+          "min_lat": 28.556082653849998,
+          "max_lat": 28.566082653849996,
+          "min_lon": 77.28205276522098,
+          "max_lon": 77.29205276522099
+        },
+        "combined_tag": "Good food, pickpockets"
+      },
+      "9_18": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.34205276522098,
+          "max_lon": 77.35205276522099
+        },
+        "combined_tag": "Politically neglected area"
+      },
+      "9_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.566082653849996,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.35205276522099,
+          "max_lon": 77.362052765221
+        },
+        "combined_tag": "Politically neglected area"
+      },
+      "10_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.586082653849996,
+          "max_lat": 28.596082653849997,
+          "min_lon": 77.01205276522099,
+          "max_lon": 77.02205276522099
+        },
+        "combined_tag": "Dangerous, avoid area"
+      },
+      "10_8": {
+        "kernel_boundaries": {
+          "min_lat": 28.576082653849998,
+          "max_lat": 28.586082653849996,
+          "min_lon": 77.142052765221,
+          "max_lon": 77.15205276522099
+        },
+        "combined_tag": "Government residential area"
+      },
+      "10_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.586082653849996,
+          "max_lat": 28.596082653849997,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.19205276522099
+        },
+        "combined_tag": "Diplomatic, student challenge"
+      },
+      "10_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.576082653849998,
+          "max_lat": 28.586082653849996,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Home of sigma females"
+      },
+      "10_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.576082653849998,
+          "max_lat": 28.586082653849996,
+          "min_lon": 77.252052765221,
+          "max_lon": 77.26205276522099
+        },
+        "combined_tag": "Mixed-use community zone"
+      },
+      "11_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.596082653849997,
+          "max_lat": 28.606082653849995,
+          "min_lon": 77.04205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Dense urban concrete jungle"
+      },
+      "11_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.606082653849995,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Dubious adult entertainment"
+      },
+      "11_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.606082653849995,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Top spot for 'coggs'"
+      },
+      "11_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.596082653849997,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.252052765221
+        },
+        "combined_tag": "South Delhi residential, entry"
+      },
+      "12_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.07205276522099
+        },
+        "combined_tag": "Crowded, wise idiots"
+      },
+      "12_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.62608265385,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.17205276522098
+        },
+        "combined_tag": "Undefined, ambiguous area"
+      },
+      "12_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Area of disrepute"
+      },
+      "12_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.222052765221
+        },
+        "combined_tag": "Beware of scams"
+      },
+      "12_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.636082653849996,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Undefined, ambiguous area"
+      },
+      "12_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.62608265385,
+          "min_lon": 77.362052765221,
+          "max_lon": 77.37205276522099
+        },
+        "combined_tag": "Mixed social urban area"
+      },
+      "13_6": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.09205276522098,
+          "max_lon": 77.10205276522099
+        },
+        "combined_tag": "Print media business area"
+      },
+      "13_8": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.13205276522099,
+          "max_lon": 77.142052765221
+        },
+        "combined_tag": "Urban area with mixed social characteristics and community dynamics"
+      },
+      "13_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.646082653849998,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Diverse neighborhood showing varied demographic patterns"
+      },
+      "13_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.19205276522099,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Mixed-use zone with different community groups"
+      },
+      "13_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Urban area with contrasting social interactions"
+      },
+      "13_13": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.23205276522098,
+          "max_lon": 77.24205276522099
+        },
+        "combined_tag": "Diverse neighborhood with varied social dynamics"
+      },
+      "13_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.646082653849998,
+          "max_lat": 28.656082653849996,
+          "min_lon": 77.252052765221,
+          "max_lon": 77.26205276522099
+        },
+        "combined_tag": "Mixed community area with different social patterns"
+      },
+      "13_19": {
+        "kernel_boundaries": {
+          "min_lat": 28.636082653849996,
+          "max_lat": 28.646082653849998,
+          "min_lon": 77.362052765221,
+          "max_lon": 77.37205276522099
+        },
+        "combined_tag": "Urban zone with diverse social characteristics"
+      },
+      "14_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.12205276522099,
+          "max_lon": 77.13205276522099
+        },
+        "combined_tag": "Community area with mixed social dynamics"
+      },
+      "14_10": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.17205276522098,
+          "max_lon": 77.18205276522099
+        },
+        "combined_tag": "Diverse area with varied social patterns"
+      },
+      "14_12": {
+        "kernel_boundaries": {
+          "min_lat": 28.656082653849996,
+          "max_lat": 28.666082653849998,
+          "min_lon": 77.222052765221,
+          "max_lon": 77.23205276522098
+        },
+        "combined_tag": "Mixed neighborhood with different social interactions"
+      },
+      "14_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Urban zone with diverse community characteristics"
+      },
+      "14_16": {
+        "kernel_boundaries": {
+          "min_lat": 28.656082653849996,
+          "max_lat": 28.666082653849998,
+          "min_lon": 77.30205276522099,
+          "max_lon": 77.31205276522098
+        },
+        "combined_tag": "Community zone with mixed social dynamics"
+      },
+      "14_21": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.392052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Diverse neighborhood with varied social interactions"
+      },
+      "15_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.07205276522099,
+          "max_lon": 77.082052765221
+        },
+        "combined_tag": "Mixed-use area with different community patterns"
+      },
+      "15_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.686082653849997,
+          "max_lat": 28.696082653849995,
+          "min_lon": 77.12205276522099,
+          "max_lon": 77.13205276522099
+        },
+        "combined_tag": "Urban area with diverse social characteristics"
+      },
+      "15_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.696082653849995,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Urban area with mixed social characteristics and community dynamics"
+      },
+      "15_15": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.27205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Diverse neighborhood showing varied demographic patterns"
+      },
+      "15_17": {
+        "kernel_boundaries": {
+          "min_lat": 28.676082653849996,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.31205276522098,
+          "max_lon": 77.32205276522099
+        },
+        "combined_tag": "Mixed-use zone with different community groups"
+      },
+      "16_9": {
+        "kernel_boundaries": {
+          "min_lat": 28.706082653849997,
+          "max_lat": 28.71608265385,
+          "min_lon": 77.15205276522099,
+          "max_lon": 77.16205276522099
+        },
+        "combined_tag": "Urban area with contrasting social interactions"
+      },
+      "16_14": {
+        "kernel_boundaries": {
+          "min_lat": 28.696082653849995,
+          "max_lat": 28.706082653849997,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Diverse neighborhood with varied social dynamics"
+      },
+      "16_16": {
+        "kernel_boundaries": {
+          "min_lat": 28.696082653849995,
+          "max_lat": 28.706082653849997,
+          "min_lon": 77.29205276522099,
+          "max_lon": 77.30205276522099
+        },
+        "combined_tag": "Mixed community area with different social patterns"
+      },
+      "17_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.71608265385,
+          "max_lat": 28.726082653849996,
+          "min_lon": 77.112052765221,
+          "max_lon": 77.12205276522099
+        },
+        "combined_tag": "Urban zone with diverse social characteristics"
+      },
+      "18_7": {
+        "kernel_boundaries": {
+          "min_lat": 28.746082653849996,
+          "max_lat": 28.756082653849997,
+          "min_lon": 77.112052765221,
+          "max_lon": 77.12205276522099
+        },
+        "combined_tag": "Community area with mixed social dynamics"
+      },
+      "19_11": {
+        "kernel_boundaries": {
+          "min_lat": 28.756082653849997,
+          "max_lat": 28.766082653849995,
+          "min_lon": 77.20205276522098,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Diverse area with varied social patterns"
+      }
+    },
+    "2": {
+      "0_0": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.456082653849997,
+          "min_lon": 77.002052765221,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Diverse urban mixed-use area"
+      },
+      "0_1": {
+        "kernel_boundaries": {
+          "min_lat": 28.416082653849998,
+          "max_lat": 28.456082653849997,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.112052765221
+        },
+        "combined_tag": "Diverse, mixed social community"
+      },
+      "0_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.386082653849996,
+          "min_lon": 77.35205276522099,
+          "max_lon": 77.362052765221
+        },
+        "combined_tag": "Diverse demographic neighborhood"
+      },
+      "1_0": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 76.972052765221,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Diverse urban mixed social area"
+      },
+      "1_1": {
+        "kernel_boundaries": {
+          "min_lat": 28.456082653849997,
+          "max_lat": 28.516082653849995,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.112052765221
+        },
+        "combined_tag": "Diverse urban mixed community"
+      },
+      "1_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.486082653849998,
+          "max_lat": 28.526082653849997,
+          "min_lon": 77.16205276522099,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Diverse urban mixed neighborhood"
+      },
+      "1_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.476082653849996,
+          "max_lat": 28.53608265385,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Diverse urban mixed-use community"
+      },
+      "2_0": {
+        "kernel_boundaries": {
+          "min_lat": 28.586082653849996,
+          "max_lat": 28.606082653849995,
+          "min_lon": 77.01205276522099,
+          "max_lon": 77.05205276522099
+        },
+        "combined_tag": "Dangerous dense urban jungle"
+      },
+      "2_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.142052765221,
+          "max_lon": 77.20205276522098
+        },
+        "combined_tag": "Crowded, diverse, mixed-use urban"
+      },
+      "2_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.53608265385,
+          "max_lat": 28.616082653849997,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.29205276522099
+        },
+        "combined_tag": "Mixed-use youth community area"
+      },
+      "2_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.576082653849998,
+          "min_lon": 77.29205276522099,
+          "max_lon": 77.362052765221
+        },
+        "combined_tag": "Neglected residential, weed sales"
+      },
+      "2_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.546082653849997,
+          "max_lat": 28.556082653849998,
+          "min_lon": 77.392052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Diverse residential neighborhood"
+      },
+      "3_1": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.696082653849995,
+          "min_lon": 77.05205276522099,
+          "max_lon": 77.13205276522099
+        },
+        "combined_tag": "Crowded urban mixed-use, quirky"
+      },
+      "3_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.696082653849995,
+          "min_lon": 77.13205276522099,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Ambiguous, urban, mixed, disrepute"
+      },
+      "3_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.62608265385,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.21205276522099,
+          "max_lon": 77.28205276522098
+        },
+        "combined_tag": "Ambiguous, diverse urban, scams"
+      },
+      "3_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.616082653849997,
+          "max_lat": 28.686082653849997,
+          "min_lon": 77.30205276522099,
+          "max_lon": 77.37205276522099
+        },
+        "combined_tag": "Diverse urban mixed-use community"
+      },
+      "3_5": {
+        "kernel_boundaries": {
+          "min_lat": 28.666082653849998,
+          "max_lat": 28.676082653849996,
+          "min_lon": 77.392052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Diverse social neighborhood"
+      },
+      "4_1": {
+        "kernel_boundaries": {
+          "min_lat": 28.71608265385,
+          "max_lat": 28.756082653849997,
+          "min_lon": 77.112052765221,
+          "max_lon": 77.12205276522099
+        },
+        "combined_tag": "Diverse urban mixed community"
+      },
+      "4_2": {
+        "kernel_boundaries": {
+          "min_lat": 28.706082653849997,
+          "max_lat": 28.766082653849995,
+          "min_lon": 77.15205276522099,
+          "max_lon": 77.21205276522099
+        },
+        "combined_tag": "Diverse urban contrasting social"
+      },
+      "4_3": {
+        "kernel_boundaries": {
+          "min_lat": 28.696082653849995,
+          "max_lat": 28.706082653849997,
+          "min_lon": 77.26205276522099,
+          "max_lon": 77.27205276522099
+        },
+        "combined_tag": "Diverse social neighborhood"
+      },
+      "4_4": {
+        "kernel_boundaries": {
+          "min_lat": 28.696082653849995,
+          "max_lat": 28.706082653849997,
+          "min_lon": 77.29205276522099,
+          "max_lon": 77.30205276522099
+        },
+        "combined_tag": "Mixed social community"
+      }
+    },
+    "3": {
+      "0_0": {
+        "kernel_boundaries": {
+          "min_lat": 28.37608265385,
+          "max_lat": 28.766082653849995,
+          "min_lon": 76.972052765221,
+          "max_lon": 77.40205276522099
+        },
+        "combined_tag": "Gritty, diverse, crowded urban mix"
+      }
+    }
+  }
+}
