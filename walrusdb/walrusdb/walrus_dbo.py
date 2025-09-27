@@ -9,7 +9,7 @@ class DBO(metaclass=Singleton):
             publisher_url or "http://walrus-publisher-testnet.haedal.xyz:9001"
         )
         self.aggregator_url = (
-            aggregator_url or "https://aggregator.testnet.walrus.mirai.cloud"
+            aggregator_url or "https://walrus-testnet.blockscope.net"
         )
         self.client = WalrusClient(
             publisher_base_url=self.publisher_url,
@@ -17,6 +17,9 @@ class DBO(metaclass=Singleton):
         )
 
     def create_blob_from_data(self, data: dict) -> str:
+        if isinstance(data, str):
+            import json
+            data = json.loads(data)
         if not isinstance(data, dict):
             raise ValueError("Data must be a dictionary")
         data = bson.dumps(data)

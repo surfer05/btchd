@@ -24,4 +24,4 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["walrusdb"]
+where = ["."]

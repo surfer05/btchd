@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from server.labels import generate_city_labels
+from backend.labels import get_city_labels
 
 
 app = Flask(__name__)
@@ -14,31 +14,31 @@ def home():
 @app.route("/echo", methods=["POST"])
 def echo():
     data = request.get_json()
-    return jsonify({"you_sent": data})
+    return jsonify({"Data": data})
 
 
 @app.route("/label", methods=["POST"])
 def post_label():
     data = request.get_json()
-    key_id = data.get("keyId", None)
-    assertion = data.get("assertion", None)
+    # {'proof': '0x', 'review': {'categories': ['Location'], 'text': 'Beta', 'rating': 5}, 'expiresAt': 1759007394, 'publicInputsHex': '0x', 'geohash7': 'ttnf3nz'}
     proof = data.get("proof", None)
-    public_inputs = data.get("publicInputs", None)
-    if key_id is None or proof is None:
-        return jsonify({"error": "Invalid Proof"}), 400
-    if assertion is False:
-        return jsonify({"error": "Assertion Failed"}), 400
+    if proof is None:
+        return "Proof not found", 400
+    review = data.get("review", None)
+    if review is None:
+        return "Review is empty", 400
+    label = review.get("text")
+    categories = review.get("categories")
+    rating = review.get("rating")
     # TODO: add data to DB
-    return 200
+    return "Review successful", 200
 
 
 @app.route("/label", methods=["GET"])
 def get_labels():
     city = request.args.get("city")
     level = request.args.get("level", "0")
-    # print(city, level)
-    results = generate_city_labels(city, level)
-    # print(results)
+    results = get_city_labels(city, level)
     return jsonify({"data": results}), 200
 
 

@@ -33,7 +33,7 @@ class Database:
     def get_database_name(self):
         return self.database.name
 
-    def get_collection(self):
+    def get_collections(self):
         return self.database.collections
 
     def get_indexes(self):

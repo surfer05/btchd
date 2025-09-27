@@ -2,8 +2,9 @@ from datetime import datetime
 import json
 from pathlib import Path
 
+
 class CityData:
-    def __init__(self, file_path: str):
+    def __init__(self, file_path: str, labels_file_path: str = None):
         data = read_json_file(file_path)
         if not data.get('success'):
             raise ValueError("Invalid Json Data")
@@ -26,6 +27,9 @@ class CityData:
         self.neighborhoodsGeoJSONAvailable = data.get('neighborhoodsGeoJSONAvailable')
         self.neighborhoodsGeoJSONURL = data.get('neighborhoodsGeoJSONURL')
 
+        if labels_file_path is not None:
+            self.levels = get_labels_data(labels_file_path)
+
     @property
     def date_generated(self):
         return datetime.fromtimestamp(self.epoch_generated).strftime('%Y-%m-%d')
@@ -41,6 +45,50 @@ def read_json_file(file_path: str):
     except json.JSONDecodeError as e:
         print(f"Error: Invalid JSON format → {e}")
     return None
+
+
+def get_labels_data(file_path):
+    data = read_json_file(file_path)
+    levels = {}
+    for level, point in data.get("levels").items():
+        labels = []
+        for _, label_data in point.items():
+            bounds = label_data.get("kernel_boundaries")
+            lat = (bounds["max_lat"] + bounds["min_lat"]) / 2
+            lon = (bounds["max_lon"] + bounds["min_lon"]) / 2
+            tag = label_data.get("combined_tag").get("summary")
+            confidence = label_data.get("combined_tag").get("confidence")
+            labels.append({
+                "level": level,
+                "lat": lat,
+                "lon": lon,
+                "tag": tag,
+                "confidence": confidence,
+            })
+        levels[int(level)] = labels
+    return levels
+
+
+def get_city_data(city, levels=False):
+    city = city.lower()
+    file_path = Path(__file__).parent.parent / "data" / f"{city}.json"
+    if levels:
+        labels_file_path = Path(__file__).parent.parent / "data" / f"{city}_labels.json"
+        city_data = CityData(file_path, labels_file_path)
+    else:
+        city_data = CityData(file_path)
+    return city_data
+
+
+def save_city_labels(city, labels_data):
+    city = city.lower()
+    file_path = Path(__file__).parent.parent / "data" / f"{city}_labels.json"
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(labels_data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Error saving labels: {e}")
+
 
 if __name__ == "__main__":
     file_path = Path(__file__).parent.parent / "data" / "delhi.json"

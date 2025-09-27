@@ -21,7 +21,7 @@ class SummaryProvider(ABC):
     """Abstract base class for summary providers"""
     
     @abstractmethod
-    async def summarize_batch(self, cell_descriptions: List[str], level: int, kernel_size: int) -> Dict[str, str]:
+    async def summarize_batch(self, cell_descriptions: List[str], level: int, kernel_size: int) -> Dict[str, Dict[str, any]]:
         """Summarize a batch of cells"""
         pass
 
@@ -32,7 +32,7 @@ class OpenAISummaryProvider(SummaryProvider):
         self.api_key = api_key or os.getenv('OPENAI_API_KEY')
         self.model = model
         
-    async def summarize_batch(self, cell_descriptions: List[str], level: int, kernel_size: int) -> Dict[str, str]:
+    async def summarize_batch(self, cell_descriptions: List[str], level: int, kernel_size: int) -> Dict[str, Dict[str, any]]:
         """Summarize cells using OpenAI GPT"""
         if not self.api_key:
             # Mock response for testing
@@ -49,8 +49,14 @@ Cells to analyze:
 Return your response as a JSON object:
 {{
     "summaries": {{
-        "1": "Brief summary for cell 1",
-        "2": "Brief summary for cell 2",
+        "1": {{
+            "summary": "Brief summary for cell 1",
+            "confidence": "score between 0 and 1, where a higher score means more tags in the cell strongly support the summary."
+        }},
+        "2": {{
+            "summary": "Brief summary for cell 2",
+            "confidence": "score between 0 and 1, where a higher score means more tags in the cell strongly support the summary."
+        }},
         ...
     }}
 }}
@@ -86,43 +92,58 @@ Each summary should be at max 5 words describing the area's character based on t
                 else:
                     raise Exception(f"OpenAI API call failed with status {response.status}")
     
-    def _parse_response(self, response_text: str, num_cells: int) -> Dict[str, str]:
+    def _parse_response(self, response_text: str, num_cells: int) -> Dict[str, Dict[str, any]]:
         """Parse the JSON response from OpenAI"""
         try:
             result_data = json.loads(response_text)
             summaries = result_data.get("summaries", {})
             
-            # Convert to our format
+            # Convert to our format with both summary and confidence
             result = {}
             for i in range(num_cells):
                 cell_key = str(i + 1)  # OpenAI uses 1-based indexing
-                result[str(i)] = summaries.get(cell_key, "No summary available")
+                cell_data = summaries.get(cell_key, {})
+                
+                # Extract summary and confidence, with fallbacks
+                summary = cell_data.get("summary", "No summary available")
+                confidence = cell_data.get("confidence", 0.0)
+                
+                # Ensure confidence is a float
+                try:
+                    confidence = float(confidence)
+                except (ValueError, TypeError):
+                    confidence = 0.0
+                
+                result[str(i)] = {
+                    "summary": summary,
+                    "confidence": confidence
+                }
             
             return result
             
         except json.JSONDecodeError as e:
             # print(f"Failed to parse OpenAI JSON response: {e}")
             # print(f"Raw response: {response_text}")
-            return {str(i): "Error parsing response" for i in range(num_cells)}
+            return {str(i): {"summary": "Error parsing response", "confidence": 0.0} for i in range(num_cells)}
     
-    def _get_mock_response(self, num_cells: int) -> Dict[str, str]:
+    def _get_mock_response(self, num_cells: int) -> Dict[str, Dict[str, any]]:
         """Get mock response for testing"""
         mock_summaries = [
-            "Urban area with mixed social characteristics and community dynamics",
-            "Diverse neighborhood showing varied demographic patterns",
-            "Mixed-use zone with different community groups",
-            "Urban area with contrasting social interactions",
-            "Diverse neighborhood with varied social dynamics",
-            "Mixed community area with different social patterns",
-            "Urban zone with diverse social characteristics",
-            "Community area with mixed social dynamics",
-            "Diverse area with varied social patterns",
-            "Mixed neighborhood with different social interactions",
-            "Urban zone with diverse community characteristics",
-            "Community zone with mixed social dynamics",
-            "Diverse neighborhood with varied social interactions",
-            "Mixed-use area with different community patterns",
-            "Urban area with diverse social characteristics"
+            {"summary": "Urban area with mixed social characteristics and community dynamics", "confidence": 0.8},
+            {"summary": "Diverse neighborhood showing varied demographic patterns", "confidence": 0.7},
+            {"summary": "Mixed-use zone with different community groups", "confidence": 0.9},
+            {"summary": "Urban area with contrasting social interactions", "confidence": 0.6},
+            {"summary": "Diverse neighborhood with varied social dynamics", "confidence": 0.8},
+            {"summary": "Mixed community area with different social patterns", "confidence": 0.7},
+            {"summary": "Urban zone with diverse social characteristics", "confidence": 0.8},
+            {"summary": "Community area with mixed social dynamics", "confidence": 0.6},
+            {"summary": "Diverse area with varied social patterns", "confidence": 0.9},
+            {"summary": "Mixed neighborhood with different social interactions", "confidence": 0.7},
+            {"summary": "Urban zone with diverse community characteristics", "confidence": 0.8},
+            {"summary": "Community zone with mixed social dynamics", "confidence": 0.6},
+            {"summary": "Diverse neighborhood with varied social interactions", "confidence": 0.8},
+            {"summary": "Mixed-use area with different community patterns", "confidence": 0.7},
+            {"summary": "Urban area with diverse social characteristics", "confidence": 0.9}
         ]
         
         result = {}
@@ -138,11 +159,12 @@ class GeminiSummaryProvider(SummaryProvider):
         self.api_key = api_key or os.getenv('GEMINI_API_KEY')
         self.model = model
         
-    async def summarize_batch(self, cell_descriptions: List[str], level: int, kernel_size: int) -> Dict[str, str]:
+    async def summarize_batch(self, cell_descriptions: List[str], level: int, kernel_size: int) -> Dict[str, Dict[str, any]]:
         """Summarize cells using Google Gemini"""
         if not self.api_key:
             # Mock response for testing
-            return self._get_mock_response(len(cell_descriptions))
+            # return self._get_mock_response(len(cell_descriptions))
+            raise Exception("No API key found for Gemini")
         
         try:
             from google import genai
@@ -161,8 +183,14 @@ Cells to analyze:
 Return your response as a JSON object:
 {{
     "summaries": {{
-        "1": "Brief summary for cell 1",
-        "2": "Brief summary for cell 2",
+        "1": {{
+            "summary": "Brief summary for cell 1",
+            "confidence": "score between 0 and 1, where a higher score means more tags in the cell strongly support the summary."
+        }},
+        "2": {{
+            "summary": "Brief summary for cell 2",
+            "confidence": "score between 0 and 1, where a higher score means more tags in the cell strongly support the summary."
+        }},
         ...
     }}
 }}
@@ -191,7 +219,7 @@ Each summary should be at max 5 words describing the area's character based on t
             # print(f"Gemini API call failed: {e}")
             return self._get_mock_response(len(cell_descriptions))
     
-    def _parse_response(self, response_text: str, num_cells: int) -> Dict[str, str]:
+    def _parse_response(self, response_text: str, num_cells: int) -> Dict[str, Dict[str, any]]:
         """Parse the JSON response from Gemini"""
         try:
             # Handle markdown code blocks that Gemini sometimes returns
@@ -219,37 +247,52 @@ Each summary should be at max 5 words describing the area's character based on t
             result_data = json.loads(response_text)
             summaries = result_data.get("summaries", {})
             
-            # Convert to our format
+            # Convert to our format with both summary and confidence
             result = {}
             for i in range(num_cells):
                 cell_key = str(i + 1)  # Gemini uses 1-based indexing
-                result[str(i)] = summaries.get(cell_key, "No summary available")
+                cell_data = summaries.get(cell_key, {})
+                
+                # Extract summary and confidence, with fallbacks
+                summary = cell_data.get("summary", "No summary available")
+                confidence = cell_data.get("confidence", 0.0)
+                
+                # Ensure confidence is a float
+                try:
+                    confidence = float(confidence)
+                except (ValueError, TypeError):
+                    confidence = 0.0
+                
+                result[str(i)] = {
+                    "summary": summary,
+                    "confidence": confidence
+                }
             
             return result
             
         except json.JSONDecodeError as e:
             # print(f"Failed to parse Gemini JSON response: {e}")
             # print(f"Raw response: {response_text}")
-            return {str(i): "Error parsing response" for i in range(num_cells)}
+            return {str(i): {"summary": "Error parsing response", "confidence": 0.0} for i in range(num_cells)}
     
-    def _get_mock_response(self, num_cells: int) -> Dict[str, str]:
+    def _get_mock_response(self, num_cells: int) -> Dict[str, Dict[str, any]]:
         """Get mock response for testing"""
         mock_summaries = [
-            "Urban area with mixed social characteristics and community dynamics",
-            "Diverse neighborhood showing varied demographic patterns",
-            "Mixed-use zone with different community groups",
-            "Urban area with contrasting social interactions",
-            "Diverse neighborhood with varied social dynamics",
-            "Mixed community area with different social patterns",
-            "Urban zone with diverse social characteristics",
-            "Community area with mixed social dynamics",
-            "Diverse area with varied social patterns",
-            "Mixed neighborhood with different social interactions",
-            "Urban zone with diverse community characteristics",
-            "Community zone with mixed social dynamics",
-            "Diverse neighborhood with varied social interactions",
-            "Mixed-use area with different community patterns",
-            "Urban area with diverse social characteristics"
+            {"summary": "Urban area with mixed social characteristics and community dynamics", "confidence": 0.8},
+            {"summary": "Diverse neighborhood showing varied demographic patterns", "confidence": 0.7},
+            {"summary": "Mixed-use zone with different community groups", "confidence": 0.9},
+            {"summary": "Urban area with contrasting social interactions", "confidence": 0.6},
+            {"summary": "Diverse neighborhood with varied social dynamics", "confidence": 0.8},
+            {"summary": "Mixed community area with different social patterns", "confidence": 0.7},
+            {"summary": "Urban zone with diverse social characteristics", "confidence": 0.8},
+            {"summary": "Community area with mixed social dynamics", "confidence": 0.6},
+            {"summary": "Diverse area with varied social patterns", "confidence": 0.9},
+            {"summary": "Mixed neighborhood with different social interactions", "confidence": 0.7},
+            {"summary": "Urban zone with diverse community characteristics", "confidence": 0.8},
+            {"summary": "Community zone with mixed social dynamics", "confidence": 0.6},
+            {"summary": "Diverse neighborhood with varied social interactions", "confidence": 0.8},
+            {"summary": "Mixed-use area with different community patterns", "confidence": 0.7},
+            {"summary": "Urban area with diverse social characteristics", "confidence": 0.9}
         ]
         
         result = {}
