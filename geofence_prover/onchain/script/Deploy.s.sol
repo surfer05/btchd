@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.24;
 import "forge-std/Script.sol";
-import "../Verifier.sol";
+import "../src/GeofenceRegistry.sol";
 
 contract Deploy is Script {
     function run() external {
-        vm.startBroadcast();
-        Verifier v = new Verifier();
-        console2.log("Verifier:", address(v));
+        address verifier = vm.envAddress("VERIFIER_ADDR"); // deployed Verifier.sol address
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+        GeofenceRegistry reg = new GeofenceRegistry(verifier);
         vm.stopBroadcast();
+        console2.log("GeofenceRegistry:", address(reg));
     }
 }
