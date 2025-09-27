@@ -85,3 +85,7 @@ incremental/
 # Cache
 srs_cache/*.xcuserdata/
 *.xcuserdata/
+**/__pycache__/
+
+# venv
+.venv/
