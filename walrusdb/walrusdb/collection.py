@@ -22,9 +22,9 @@ class Collection:
         return self.blob_id
 
     def create_collection(self, fields, data):
-        if not validate_objects(fields):
+        if not validate_objects(fields, data):
             raise ValueError("Data validation failed")
-        documents = self.create_objects(data)
+        documents = self.create_documents(data)
         self.collection = CollectionDocument(documents=documents)
         self.blob_id = self.dbo.create_blob_from_data(self.collection.model_dump_json())
         return self.blob_id

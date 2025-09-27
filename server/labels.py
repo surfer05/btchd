@@ -35,7 +35,7 @@ def generate_city_labels(city, level):
     return output
 
 
-def add_city_labes(city, lat, lon, tag):
+def add_city_label(city, lat, lon, tag):
     city_data = get_city_data(city)
     args = Args(
         api_key="abc123",
@@ -48,3 +48,7 @@ def add_city_labes(city, lat, lon, tag):
         tag=None,
         existing_results=None,
     )
+
+
+def get_city_labels(city, level):
+    pass
