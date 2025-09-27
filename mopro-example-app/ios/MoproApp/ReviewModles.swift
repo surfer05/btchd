@@ -29,4 +29,8 @@ struct ReviewRow: Codable, Identifiable {
     var rating: Int
     var text: String
     var timestamp: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case addr, geohash7, categories, rating, text, timestamp
+    }
 }

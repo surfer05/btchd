@@ -4,6 +4,7 @@ import CryptoKit
 import MapKit
 import SwiftUI
 
+
 struct ContentView: View {
     // Map state
     @State private var position: MapCameraPosition = .region(
@@ -133,7 +134,7 @@ struct ContentView: View {
                 Button {
                     Task { await prove() }
                 } label: {
-                    Text("Prove geofence").font(.headline)
+                    Text("Prove").font(.headline)
                 }
                 .disabled(proving)
                 .padding(.top, 4)
@@ -156,7 +157,9 @@ struct ContentView: View {
                 ScrollView { Text(log).font(.system(.footnote, design: .monospaced)) }
                     .frame(maxHeight: 160)
             }
-            .padding().navigationTitle("Prove geofence")
+            .padding()
+            .navigationTitle("Geofence")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .searchable(text: $search.query, placement: .navigationBarDrawer(displayMode: .always))
 

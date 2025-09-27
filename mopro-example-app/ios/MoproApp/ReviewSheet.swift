@@ -6,53 +6,127 @@ struct ReviewSheet: View {
     var onSubmit: (_ categories: [String], _ rating: Int, _ text: String) -> Void
     @Environment(\.dismiss) private var dismiss
 
-    @State private var picks: Set<String> = []
-    @State private var rating: Int = 4
-    @State private var text: String = ""
+    @State private var selectedCategories: [String] = []
+    @State private var rating: Int = 0
+    @State private var notes: String = ""
 
-    private let cats = [
-        "residential", "office", "party", "tourist", "recreational", "unsafe", "commercial",
-        "green",
+    private let availableCategories = [
+        "Food", "Service", "Atmosphere", "Price", "Location", 
+        "Cleanliness", "Accessibility", "Parking", "WiFi", "Noise"
     ]
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Categories") {
-                    ForEach(cats, id: \.self) { c in
-                        Toggle(
-                            c.capitalized,
-                            isOn: Binding(
-                                get: { picks.contains(c) },
-                                set: { newValue in
-                                    if newValue {
-                                        picks.insert(c)
-                                    } else {
-                                        picks.remove(c)
-                                    }
-                                }
-                            ))
-                    }
-                }
-                Section("Rating") {
-                    Stepper("Rating: \(rating)", value: $rating, in: 1...5)
-                }
-                Section("Notes") {
-                    TextField("What did you observe?", text: $text, axis: .vertical)
+            VStack(spacing: 20) {
+                // Notes field at the top
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Notes")
+                        .font(.headline)
+                    TextField("Add your notes here...", text: $notes, axis: .vertical)
+                        .textFieldStyle(.roundedBorder)
                         .lineLimit(3...6)
                 }
-                Section {
-                    Button("Submit") {
-                        onSubmit(
-                            Array(picks), rating,
-                            text.trimmingCharacters(in: .whitespacesAndNewlines))
+                
+                // Categories dropdown
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Categories")
+                        .font(.headline)
+                    
+                    Menu {
+                        ForEach(availableCategories, id: \.self) { category in
+                            Button(action: {
+                                if selectedCategories.contains(category) {
+                                    selectedCategories.removeAll { $0 == category }
+                                } else {
+                                    selectedCategories.append(category)
+                                }
+                            }) {
+                                HStack {
+                                    Text(category)
+                                    if selectedCategories.contains(category) {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(selectedCategories.isEmpty ? "Select categories..." : "\(selectedCategories.count) selected")
+                                .foregroundColor(selectedCategories.isEmpty ? .secondary : .primary)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.secondary)
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                    }
+                    
+                    // Show selected categories as chips
+                    if !selectedCategories.isEmpty {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(selectedCategories, id: \.self) { category in
+                                    HStack(spacing: 4) {
+                                        Text(category)
+                                            .font(.caption)
+                                        Button(action: {
+                                            selectedCategories.removeAll { $0 == category }
+                                        }) {
+                                            Image(systemName: "xmark.circle.fill")
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.blue.opacity(0.1))
+                                    .foregroundColor(.blue)
+                                    .cornerRadius(12)
+                                }
+                            }
+                            .padding(.horizontal, 1)
+                        }
+                    }
+                }
+                
+                // Star rating UI
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Rating")
+                        .font(.headline)
+                    
+                    HStack(spacing: 4) {
+                        ForEach(1...5, id: \.self) { star in
+                            Button(action: {
+                                rating = star
+                            }) {
+                                Image(systemName: star <= rating ? "star.fill" : "star")
+                                    .font(.title2)
+                                    .foregroundColor(star <= rating ? .yellow : .gray)
+                            }
+                        }
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .navigationTitle("Add Review")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
                         dismiss()
-                    }.disabled(
-                        picks.isEmpty
-                            || text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Submit") {
+                        onSubmit(selectedCategories, rating, notes.trimmingCharacters(in: .whitespacesAndNewlines))
+                        dismiss()
+                    }
+                    .disabled(selectedCategories.isEmpty || rating == 0)
                 }
             }
-            .navigationTitle("Add a review")
         }
     }
 }
