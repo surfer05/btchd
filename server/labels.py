@@ -39,7 +39,7 @@ def generate_city_labels(city, level):
             "lon": mean_lon,
             "strength": 1,
         })
-    return output
+    return results
         
 
 def add_city_labes(city, lat, lon, tag):
