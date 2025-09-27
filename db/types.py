@@ -1,12 +1,11 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Type
 from pydantic import BaseModel
 
 
-# Top level structure
+# Database
 # ------------------------
 
 class IndexDefinition(BaseModel):
-    id: str
     name: str
     field: str
     type: str  # "string" | "number"
@@ -14,14 +13,14 @@ class IndexDefinition(BaseModel):
 
 
 class CollectionDefinition(BaseModel):
-    id: str
     name: str
-    fields: List[str]
+    fields: Dict[str]
     indexes: List[str] 
     collection_file: str
 
 
 class DatabaseDefinition(BaseModel):
+    name: str
     collections: Dict[str, CollectionDefinition]
     indexes: Dict[str, IndexDefinition]
 
@@ -29,8 +28,7 @@ class DatabaseDefinition(BaseModel):
 # Collections
 # ------------------------
 
-class CollectionDocuments(BaseModel):
-    collection_id: str
+class CollectionDocument(BaseModel):
     documents: List[str]  # blob_ids
 
 
@@ -42,9 +40,10 @@ class StringIndex(BaseModel):
 
 
 class BTreeNode(BaseModel):
-    keys: List[int]
+    key: int
     doc_ids: Optional[List[str]] = None
-    children: Optional[List["BTreeNode"]] = None
+    left: Optional["BTreeNode"] = None
+    right: Optional["BTreeNode"] = None
 
 
 class NumericIndex(BaseModel):
@@ -52,3 +51,13 @@ class NumericIndex(BaseModel):
 
 
 BTreeNode.model_rebuild()
+
+
+# Nodes
+# ------------------------
+
+STRING_TO_FIELD = {
+    'str'   : str,
+    'int'   : int,
+    'float' : float,
+}
