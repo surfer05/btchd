@@ -21,7 +21,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-from summary_providers import SummaryProviderFactory
+from geolocation_summarizer.summary_providers import SummaryProviderFactory
 
 @dataclass
 class Tag:
@@ -58,7 +58,7 @@ class HierarchicalGridSummarizer:
     def load_data(self, json_path: str = None, tags_data = None) -> List[Tag]:
         """Load tags from JSON file"""
         if json_path is not None:
-            print(f"📁 Loading data from: {json_path}")
+            # print(f"📁 Loading data from: {json_path}")
             with open(json_path, 'r') as f:
                 data = json.load(f)
             tags_data = data.get('tags', [])
@@ -73,19 +73,19 @@ class HierarchicalGridSummarizer:
             )
             tags.append(tag)
         
-        print(f"✅ Loaded {len(tags)} tags successfully")
+        # print(f"✅ Loaded {len(tags)} tags successfully")
         return tags
     
     def define_boundaries(self, tags: List[Tag], custom_boundaries: Optional[Tuple[float, float, float, float]] = None) -> Tuple[float, float, float, float]:
         """Define rectangular area boundaries from data or use custom boundaries"""
         if custom_boundaries:
             min_lat, max_lat, min_lon, max_lon = custom_boundaries
-            print(f"📍 Using custom boundaries:")
-            print(f"   Latitude: {min_lat:.6f} to {max_lat:.6f}")
-            print(f"   Longitude: {min_lon:.6f} to {max_lon:.6f}")
+            # print(f"📍 Using custom boundaries:")
+            # print(f"   Latitude: {min_lat:.6f} to {max_lat:.6f}")
+            # print(f"   Longitude: {min_lon:.6f} to {max_lon:.6f}")
             return min_lat, max_lat, min_lon, max_lon
         
-        print("📍 Calculating boundaries from data...")
+        # print("📍 Calculating boundaries from data...")
         lats = [tag.lat for tag in tags]
         lons = [tag.lon for tag in tags]
         
@@ -98,16 +98,16 @@ class HierarchicalGridSummarizer:
         buffer = self.grid_delta
         boundaries = (min_lat - buffer, max_lat + buffer, min_lon - buffer, max_lon + buffer)
         
-        print(f"✅ Calculated boundaries:")
-        print(f"   Latitude: {boundaries[0]:.6f} to {boundaries[1]:.6f}")
-        print(f"   Longitude: {boundaries[2]:.6f} to {boundaries[3]:.6f}")
-        print(f"   Buffer added: {buffer}")
+        # print(f"✅ Calculated boundaries:")
+        # print(f"   Latitude: {boundaries[0]:.6f} to {boundaries[1]:.6f}")
+        # print(f"   Longitude: {boundaries[2]:.6f} to {boundaries[3]:.6f}")
+        # print(f"   Buffer added: {buffer}")
         
         return boundaries
     
     def create_base_grid(self, tags: List[Tag], boundaries: Tuple[float, float, float, float]) -> Dict[Tuple[int, int], GridCell]:
         """Create base grid cells and combine tags within each cell"""
-        print(f"🔲 Creating base grid with cell size: {self.grid_delta}")
+        # print(f"🔲 Creating base grid with cell size: {self.grid_delta}")
         min_lat, max_lat, min_lon, max_lon = boundaries
         
         # Calculate grid dimensions
@@ -116,14 +116,14 @@ class HierarchicalGridSummarizer:
         grid_lat_cells = int(lat_range / self.grid_delta) + 1
         grid_lon_cells = int(lon_range / self.grid_delta) + 1
         
-        print(f"   Grid dimensions: {grid_lat_cells} x {grid_lon_cells} cells")
-        print(f"   Total possible cells: {grid_lat_cells * grid_lon_cells}")
+        # print(f"   Grid dimensions: {grid_lat_cells} x {grid_lon_cells} cells")
+        # print(f"   Total possible cells: {grid_lat_cells * grid_lon_cells}")
         
         # Create grid cells
         grid = {}
         cells_with_tags = 0
         
-        print(f"📍 Processing {len(tags)} tags...")
+        # print(f"📍 Processing {len(tags)} tags...")
         for i, tag in enumerate(tags):
             # Calculate grid coordinates
             grid_lat = int((tag.lat - min_lat) / self.grid_delta)
@@ -166,24 +166,24 @@ class HierarchicalGridSummarizer:
             min_x = min(cell.x for cell in grid.values())
             min_y = min(cell.y for cell in grid.values())
             
-            print(f"   Normalizing coordinates: shifting by (-{min_x}, -{min_y})")
+            # print(f"   Normalizing coordinates: shifting by (-{min_x}, -{min_y})")
             for cell in grid.values():
                 cell.x -= min_x
                 cell.y -= min_y
         
-        print(f"✅ Created {len(grid)} grid cells with tags")
-        print(f"   Cells with tags: {cells_with_tags}")
-        print(f"   Empty cells: {grid_lat_cells * grid_lon_cells - cells_with_tags}")
+        # print(f"✅ Created {len(grid)} grid cells with tags")
+        # print(f"   Cells with tags: {cells_with_tags}")
+        # print(f"   Empty cells: {grid_lat_cells * grid_lon_cells - cells_with_tags}")
         
         # Count cells with multiple tags
         multi_tag_cells = sum(1 for cell in grid.values() if ';' in cell.combined_tag)
-        print(f"   Cells with multiple tags: {multi_tag_cells}")
+        # print(f"   Cells with multiple tags: {multi_tag_cells}")
         
         return grid
     
     async def summarize_cell_tags(self, grid: Dict[Tuple[int, int], GridCell], batch_size: int = 30) -> Dict[Tuple[int, int], GridCell]:
         """Summarize multiple tags within each cell"""
-        print(f"\n🔍 Summarizing tags within individual cells...")
+        # print(f"\n🔍 Summarizing tags within individual cells...")
         
         # Find cells with multiple tags
         cells_with_multiple_tags = []
@@ -192,10 +192,10 @@ class HierarchicalGridSummarizer:
                 cells_with_multiple_tags.append(cell)
         
         if not cells_with_multiple_tags:
-            print("   No cells with multiple tags found")
+            # print("   No cells with multiple tags found")
             return grid
         
-        print(f"   Found {len(cells_with_multiple_tags)} cells with multiple tags")
+        # print(f"   Found {len(cells_with_multiple_tags)} cells with multiple tags")
         
         # Process in batches
         total_batches = (len(cells_with_multiple_tags) + batch_size - 1) // batch_size
@@ -204,7 +204,7 @@ class HierarchicalGridSummarizer:
             batch = cells_with_multiple_tags[batch_idx:batch_idx + batch_size]
             batch_num = batch_idx // batch_size + 1
             
-            print(f"   📦 Processing batch {batch_num}/{total_batches} ({len(batch)} cells)...")
+            # print(f"   📦 Processing batch {batch_num}/{total_batches} ({len(batch)} cells)...")
             
             # Create descriptions for cells with multiple tags
             cell_descriptions = []
@@ -213,7 +213,7 @@ class HierarchicalGridSummarizer:
                 cell_descriptions.append(f"Cell {i+1} (lat: {cell.lat:.3f}, lon: {cell.lon:.3f}): {', '.join(tags)}")
             
             try:
-                print(f"     🔄 Calling {self.summary_provider.__class__.__name__} API...")
+                # print(f"     🔄 Calling {self.summary_provider.__class__.__name__} API...")
                 summaries = await self.summary_provider.summarize_batch(cell_descriptions, -1, 1)  # Level -1 for cell-level summarization
                 
                 # Update cells with summaries
@@ -223,12 +223,12 @@ class HierarchicalGridSummarizer:
                         cell.combined_tag = summaries[str(i)]
                         updated_count += 1
                 
-                print(f"     ✅ Updated {updated_count}/{len(batch)} cells with summaries")
+                # print(f"     ✅ Updated {updated_count}/{len(batch)} cells with summaries")
                 
             except Exception as e:
                 print(f"     ❌ Error processing batch {batch_num}: {e}")
         
-        print(f"✅ Completed cell-level tag summarization")
+        # print(f"✅ Completed cell-level tag summarization")
         return grid
     
     def create_next_level(self, current_level: Dict[Tuple[int, int], GridCell], level_num: int) -> Dict[Tuple[int, int], GridCell]:
@@ -236,7 +236,7 @@ class HierarchicalGridSummarizer:
         kernel_size = 2 ** level_num  # 2x2, 4x4, 8x8, etc.
         stride = kernel_size  # Non-overlapping
         
-        print(f"   Creating Level {level_num} with {kernel_size}x{kernel_size} kernels (stride: {stride})...")
+        # print(f"   Creating Level {level_num} with {kernel_size}x{kernel_size} kernels (stride: {stride})...")
         
         next_level = {}
         
@@ -247,7 +247,7 @@ class HierarchicalGridSummarizer:
         min_lon = min(coord[1] for coord in coords)
         max_lon = max(coord[1] for coord in coords)
         
-        print(f"     Grid bounds: lat({min_lat}, {max_lat}), lon({min_lon}, {max_lon})")
+        # print(f"     Grid bounds: lat({min_lat}, {max_lat}), lon({min_lon}, {max_lon})")
         
         # Create non-overlapping kernels
         kernels_created = 0
@@ -300,14 +300,14 @@ class HierarchicalGridSummarizer:
                     )
                     kernels_created += 1
         
-        print(f"     Created {kernels_created} kernels")
+        # print(f"     Created {kernels_created} kernels")
         
         # Normalize coordinates so top-left is (0,0) for this level
         if next_level:
             min_x = min(cell.x for cell in next_level.values())
             min_y = min(cell.y for cell in next_level.values())
             
-            print(f"     Normalizing Level {level_num} coordinates: shifting by (-{min_x}, -{min_y})")
+            # print(f"     Normalizing Level {level_num} coordinates: shifting by (-{min_x}, -{min_y})")
             for cell in next_level.values():
                 cell.x -= min_x
                 cell.y -= min_y
@@ -316,7 +316,7 @@ class HierarchicalGridSummarizer:
     
     async def batch_summarize_level(self, level_data: Dict[Tuple[int, int], GridCell], level: int, batch_size: int = 30) -> Dict[Tuple[int, int], GridCell]:
         """Summarize a level using batch GPT API calls"""
-        print(f"🤖 Summarizing Level {level}...")
+        # print(f"🤖 Summarizing Level {level}...")
         cells = list(level_data.values())
         kernel_size = 2 ** level if level > 0 else 1
         
@@ -324,20 +324,20 @@ class HierarchicalGridSummarizer:
         cells_with_tags = [cell for cell in cells if cell.combined_tag.strip()]
         
         if not cells_with_tags:
-            print(f"   ⚠️  No cells with tags, skipping summarization")
+            # print(f"   ⚠️  No cells with tags, skipping summarization")
             return level_data
         
         # Batch process (15+ cells per API call)
         total_batches = (len(cells_with_tags) + batch_size - 1) // batch_size
         
-        print(f"   📊 Processing {len(cells_with_tags)} cells with tags in {total_batches} batches")
-        print(f"   🔧 Kernel size: {kernel_size}x{kernel_size}, Batch size: {batch_size}")
+        # print(f"   📊 Processing {len(cells_with_tags)} cells with tags in {total_batches} batches")
+        # print(f"   🔧 Kernel size: {kernel_size}x{kernel_size}, Batch size: {batch_size}")
         
         for batch_idx in range(0, len(cells_with_tags), batch_size):
             batch = cells_with_tags[batch_idx:batch_idx + batch_size]
             batch_num = batch_idx // batch_size + 1
             
-            print(f"   📦 Processing batch {batch_num}/{total_batches} ({len(batch)} cells)...")
+            # print(f"   📦 Processing batch {batch_num}/{total_batches} ({len(batch)} cells)...")
             
             # Create batch descriptions
             cell_descriptions = []
@@ -345,7 +345,7 @@ class HierarchicalGridSummarizer:
                 cell_descriptions.append(f"Cell {i+1} (lat: {cell.lat:.3f}, lon: {cell.lon:.3f}): {cell.combined_tag}")
             
             try:
-                print(f"     🔄 Calling {self.summary_provider.__class__.__name__} API...")
+                # print(f"     🔄 Calling {self.summary_provider.__class__.__name__} API...")
                 summaries = await self.summary_provider.summarize_batch(cell_descriptions, level, kernel_size)
                 
                 # Update cells with summaries
@@ -355,12 +355,12 @@ class HierarchicalGridSummarizer:
                         cell.combined_tag = summaries[str(i)]
                         updated_count += 1
                 
-                print(f"     ✅ Updated {updated_count}/{len(batch)} cells with summaries")
+                # print(f"     ✅ Updated {updated_count}/{len(batch)} cells with summaries")
                 
             except Exception as e:
                 print(f"     ❌ Error processing batch {batch_num}: {e}")
         
-        print(f"✅ Completed summarization for Level {level}")
+        # print(f"✅ Completed summarization for Level {level}")
         return level_data
     
     
@@ -394,15 +394,15 @@ class HierarchicalGridSummarizer:
             with open(output_file, 'w') as f:
                 json.dump(results, f, indent=2)
             
-            print(f"Results saved to {output_file}")
+            # print(f"Results saved to {output_file}")
         else:
             return results
     
     async def update_with_new_tag(self, lat: float, lon: float, tag_text: str, 
                                  existing_results: dict, output_file: str = None) -> dict:
         """Update existing hierarchical results with a new tag"""
-        print(f"\n🔄 Updating hierarchical results with new tag...")
-        print(f"   New tag: '{tag_text}' at ({lat:.6f}, {lon:.6f})")
+        # print(f"\n🔄 Updating hierarchical results with new tag...")
+        # print(f"   New tag: '{tag_text}' at ({lat:.6f}, {lon:.6f})")
         
         # Load existing results
         if isinstance(existing_results, str):
@@ -436,12 +436,12 @@ class HierarchicalGridSummarizer:
         
         cell_key = f"{normalized_x}_{normalized_y}"
         
-        print(f"   Calculated cell coordinates: ({normalized_x}, {normalized_y})")
-        print(f"   Cell key: {cell_key}")
+        # print(f"   Calculated cell coordinates: ({normalized_x}, {normalized_y})")
+        # print(f"   Cell key: {cell_key}")
         
         # Check if cell already exists
         if cell_key in level_0:
-            print(f"   ✅ Cell {cell_key} already exists - updating with new tag")
+            # print(f"   ✅ Cell {cell_key} already exists - updating with new tag")
             existing_tag = level_0[cell_key]['combined_tag']
             # Combine with existing tag
             if existing_tag:
@@ -449,7 +449,7 @@ class HierarchicalGridSummarizer:
             else:
                 combined_tag = tag_text
         else:
-            print(f"   🆕 Cell {cell_key} is new - creating new cell")
+            # print(f"   🆕 Cell {cell_key} is new - creating new cell")
             # Calculate cell boundaries
             cell_min_lat = min_lat + grid_lat * grid_delta
             cell_max_lat = min_lat + (grid_lat + 1) * grid_delta
@@ -477,17 +477,17 @@ class HierarchicalGridSummarizer:
         level_0[cell_key]['combined_tag'] = combined_tag
         
         # Now we need to update summaries at all levels
-        print(f"\n🤖 Updating summaries at all levels...")
+        # print(f"\n🤖 Updating summaries at all levels...")
         
         # Level 0: Summarize the updated/new cell
-        print(f"   📊 Updating Level 0...")
+        # print(f"   📊 Updating Level 0...")
         if ';' in combined_tag:
             # Multiple tags - need to summarize
             cell_descriptions = [f"Cell 1 (lat: {lat:.3f}, lon: {lon:.3f}): {combined_tag}"]
             summaries = await self.summary_provider.summarize_batch(cell_descriptions, -1, 1)
             if "0" in summaries:
                 level_0[cell_key]['combined_tag'] = summaries["0"]
-                print(f"     ✅ Updated cell {cell_key}: {summaries['0']}")
+                # print(f"     ✅ Updated cell {cell_key}: {summaries['0']}")
         
         # Update higher levels
         for level_num in range(1, len(results['levels'])):
@@ -495,7 +495,7 @@ class HierarchicalGridSummarizer:
             if level_key not in results['levels']:
                 continue
                 
-            print(f"   📊 Updating Level {level_num}...")
+            # print(f"   📊 Updating Level {level_num}...")
             level_data = results['levels'][level_key]
             
             # Find which kernel this cell belongs to at this level
@@ -505,7 +505,7 @@ class HierarchicalGridSummarizer:
             kernel_key = f"{kernel_x}_{kernel_y}"
             
             if kernel_key in level_data:
-                print(f"     ✅ Found kernel {kernel_key} in Level {level_num}")
+                # print(f"     ✅ Found kernel {kernel_key} in Level {level_num}")
                 # Update the kernel's combined tag by re-summarizing
                 # We need to collect all cells that belong to this kernel
                 kernel_cells = []
@@ -521,16 +521,16 @@ class HierarchicalGridSummarizer:
                     summaries = await self.summary_provider.summarize_batch(cell_descriptions, level_num, kernel_size)
                     if "0" in summaries:
                         level_data[kernel_key]['combined_tag'] = summaries["0"]
-                        print(f"       ✅ Updated kernel {kernel_key}: {summaries['0']}")
+                        # print(f"       ✅ Updated kernel {kernel_key}: {summaries['0']}")
             else:
                 print(f"     ⚠️  Kernel {kernel_key} not found in Level {level_num}")
-                print(f"     💡 New cell is outside existing grid boundaries - no update needed")
+                # print(f"     💡 New cell is outside existing grid boundaries - no update needed")
         
         # Save updated results
         if output_file:
             with open(output_file, 'w') as f:
                 json.dump(results, f, indent=2)
-            print(f"\n💾 Updated results saved to {output_file}")
+            # print(f"\n💾 Updated results saved to {output_file}")
         
         return results
 
@@ -575,8 +575,8 @@ async def update_summarizer(args):
     return updated_results
 
 async def summarize_data(args):
-    print("🚀 Starting Hierarchical Grid Summarizer")
-    print("=" * 50)
+    # print("🚀 Starting Hierarchical Grid Summarizer")
+    # print("=" * 50)
     
     # Initialize summarizer
     summarizer = HierarchicalGridSummarizer(
@@ -586,46 +586,46 @@ async def summarize_data(args):
     )
     
     # Step a) Load data
-    print("\n📋 Step a) Loading data...")
+    # print("\n📋 Step a) Loading data...")
     tags = summarizer.load_data(tags_data=args.tags_data)
     
     # Step b) Define boundaries
-    print("\n📍 Step b) Defining boundaries...")
+    # print("\n📍 Step b) Defining boundaries...")
     custom_boundaries = None
     if all([args.min_lat, args.max_lat, args.min_lon, args.max_lon]):
         custom_boundaries = (args.min_lat, args.max_lat, args.min_lon, args.max_lon)
-        print("   Using custom boundaries provided via command line")
-    else:
-        print("   Using automatic boundary calculation from data")
+        # print("   Using custom boundaries provided via command line")
+    # else:
+    #     print("   Using automatic boundary calculation from data")
     
     boundaries = summarizer.define_boundaries(tags, custom_boundaries)
     
     # Step c) Create base grid and combine tags
-    print("\n🔲 Step c) Creating base grid and combining tags...")
+    # print("\n🔲 Step c) Creating base grid and combining tags...")
     base_grid = summarizer.create_base_grid(tags, boundaries)
     
     # Step c.1) Summarize tags within individual cells
-    print("\n🔍 Step c.1) Summarizing tags within individual cells...")
+    # print("\n🔍 Step c.1) Summarizing tags within individual cells...")
     base_grid = await summarizer.summarize_cell_tags(base_grid, batch_size=args.batch_size)
     
     # Step d) Create hierarchical levels progressively
-    print("\n🏗️  Step d) Creating hierarchical levels progressively...")
+    # print("\n🏗️  Step d) Creating hierarchical levels progressively...")
     levels = {0: base_grid}
     current_level = base_grid
     level_num = 1
     
-    print(f"   Level 0: {len(current_level)} cells (base level)")
+    # print(f"   Level 0: {len(current_level)} cells (base level)")
     
     # Step e) Summarize and create next level iteratively
-    print("\n🤖 Step e) Summarizing and creating levels iteratively...")
+    # print("\n🤖 Step e) Summarizing and creating levels iteratively...")
     while len(current_level) > 1:
         # First summarize the current level
-        print(f"\n🤖 Summarizing Level {level_num - 1}...")
+        # print(f"\n🤖 Summarizing Level {level_num - 1}...")
         current_level = await summarizer.batch_summarize_level(current_level, level_num - 1, args.batch_size)
         levels[level_num - 1] = current_level
         
         # Then create the next level using summarized tags
-        print(f"\n🏗️  Creating Level {level_num} from summarized Level {level_num - 1}...")
+        # print(f"\n🏗️  Creating Level {level_num} from summarized Level {level_num - 1}...")
         next_level = summarizer.create_next_level(current_level, level_num)
         
         if next_level:
@@ -633,26 +633,26 @@ async def summarize_data(args):
             current_level = next_level
             level_num += 1
         else:
-            print(f"   No kernels created, stopping hierarchy")
+            # print(f"   No kernels created, stopping hierarchy")
             break
     
     # Summarize the final level
     if len(current_level) > 0:
-        print(f"\n🤖 Summarizing final Level {level_num - 1}...")
+        # print(f"\n🤖 Summarizing final Level {level_num - 1}...")
         current_level = await summarizer.batch_summarize_level(current_level, level_num - 1, args.batch_size)
         levels[level_num - 1] = current_level
     
-    print(f"\n✅ Created {len(levels)} hierarchical levels")
+    # print(f"\n✅ Created {len(levels)} hierarchical levels")
     for level, level_data in levels.items():
         kernel_size = 2 ** level if level > 0 else 1
-        print(f"   Level {level}: {len(level_data)} cells (kernel: {kernel_size}x{kernel_size})")
+        # print(f"   Level {level}: {len(level_data)} cells (kernel: {kernel_size}x{kernel_size})")
     
     # Save results
-    print("\n💾 Saving results...")
+    # print("\n💾 Saving results...")
     results = summarizer.save_results(levels)
     
-    print("\n🎉 Hierarchical grid summarization complete!")
-    print("=" * 50)
+    # print("\n🎉 Hierarchical grid summarization complete!")
+    # print("=" * 50)
 
     return results
 
@@ -663,14 +663,14 @@ def main():
     # Handle update mode
     if args.update:
         if not all([args.lat, args.lon, args.tag, args.existing_results]):
-            print("❌ Update mode requires --lat, --lon, --tag, and --existing-results")
+            # print("❌ Update mode requires --lat, --lon, --tag, and --existing-results")
             return
         
         updated_data = asyncio.run(update_summarizer(args))
         return updated_data
 
     if not args.json_path:
-        print("❌ json_path is required for normal mode")
+        # print("❌ json_path is required for normal mode")
         return
     
     return asyncio.run(summarize_data(args))

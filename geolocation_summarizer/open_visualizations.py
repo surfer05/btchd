@@ -13,26 +13,26 @@ import glob
 def open_visualizations():
     """Open all generated HTML visualizations"""
     
-    print("🌐 Opening Interactive Hierarchical Summaries Visualizations")
-    print("=" * 60)
+    # print("🌐 Opening Interactive Hierarchical Summaries Visualizations")
+    # print("=" * 60)
     
     # Find all HTML files
     html_files = glob.glob("*.html")
     
     if not html_files:
-        print("❌ No HTML files found in current directory")
-        print("   Run: python visualize_summaries.py <json_file>")
+        # print("❌ No HTML files found in current directory")
+        # print("   Run: python visualize_summaries.py <json_file>")
         return
     
-    print(f"📁 Found {len(html_files)} HTML files:")
+    # print(f"📁 Found {len(html_files)} HTML files:")
     
     # Open files
     for html_file in sorted(html_files):
-        print(f"   📊 Opening: {html_file}")
+        # print(f"   📊 Opening: {html_file}")
         webbrowser.open(f"file://{os.path.abspath(html_file)}")
     
-    print(f"\n✅ Opened {len(html_files)} visualization files")
-    print("   💡 Use mouse wheel to zoom in/out for clear text visibility")
+    # print(f"\n✅ Opened {len(html_files)} visualization files")
+    # print("   💡 Use mouse wheel to zoom in/out for clear text visibility")
 
 def list_visualizations():
     """List available visualizations"""
@@ -40,17 +40,17 @@ def list_visualizations():
     html_files = glob.glob("*.html")
     
     if not html_files:
-        print("❌ No HTML files found")
+        # print("❌ No HTML files found")
         return
     
-    print("📊 Available Visualizations:")
-    print("=" * 40)
+    # print("📊 Available Visualizations:")
+    # print("=" * 40)
     
     for html_file in sorted(html_files):
         file_size = os.path.getsize(html_file) / (1024 * 1024)  # MB
-        print(f"   • {html_file} ({file_size:.1f} MB)")
+        # print(f"   • {html_file} ({file_size:.1f} MB)")
     
-    print(f"\n📁 Total: {len(html_files)} files")
+    # print(f"\n📁 Total: {len(html_files)} files")
 
 def main():
     """Main function"""

@@ -189,12 +189,12 @@ def main():
     # Load the results
     try:
         data = load_results(args.json_file)
-        print(f"✅ Loaded data from: {args.json_file}")
+        # print(f"✅ Loaded data from: {args.json_file}")
     except FileNotFoundError:
-        print(f"❌ File not found: {args.json_file}")
+        # print(f"❌ File not found: {args.json_file}")
         return
     except json.JSONDecodeError:
-        print(f"❌ Invalid JSON file: {args.json_file}")
+        # print(f"❌ Invalid JSON file: {args.json_file}")
         return
     
     # Generate output filename based on input
@@ -204,21 +204,21 @@ def main():
         os.makedirs('visuals')
     output_file = f"visuals/{base_name}_interactive.html"
     
-    print("📊 Creating single interactive hierarchical visualization...")
+    # print("📊 Creating single interactive hierarchical visualization...")
     
     # Create visualization
     fig = create_single_interactive_visualization(data, output_file)
     
-    print(f"✅ Saved: {output_file}")
-    print("\n🎉 Visualization complete!")
-    print(f"📁 Generated file: {output_file}")
-    print("\n💡 Instructions:")
-    print("   • Open the HTML file in your browser")
-    print("   • Use mouse wheel to zoom in/out")
-    print("   • Click and drag to pan around")
-    print("   • Double-click to reset zoom")
-    print("   • Hover over markers for full summaries")
-    print("   • Each level shows different granularity of summaries")
+    # print(f"✅ Saved: {output_file}")
+    # print("\n🎉 Visualization complete!")
+    # print(f"📁 Generated file: {output_file}")
+    # print("\n💡 Instructions:")
+    # print("   • Open the HTML file in your browser")
+    # print("   • Use mouse wheel to zoom in/out")
+    # print("   • Click and drag to pan around")
+    # print("   • Double-click to reset zoom")
+    # print("   • Hover over markers for full summaries")
+    # print("   • Each level shows different granularity of summaries")
 
 if __name__ == "__main__":
     main()

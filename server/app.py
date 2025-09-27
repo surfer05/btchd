@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from server.labels import generate_city_labels
 
 
@@ -34,9 +35,13 @@ def post_label():
 @app.route("/label", methods=["GET"])
 def get_labels():
     city = request.args.get("city")
-    results = generate_city_labels(city)
-    return results
+    level = request.args.get("level", "0")
+    # print(city, level)
+    results = generate_city_labels(city, level)
+    # print(results)
+    return jsonify({"data": results}), 200
 
 
 if __name__ == "__main__":
+    CORS(app)
     app.run(debug=True)

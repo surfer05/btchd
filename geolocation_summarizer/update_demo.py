@@ -12,8 +12,8 @@ from hierarchical_summarizer import HierarchicalGridSummarizer
 async def demo_update_function():
     """Demo the update function"""
     
-    print("🔄 HIERARCHICAL UPDATE FUNCTION DEMO")
-    print("=" * 50)
+    # print("🔄 HIERARCHICAL UPDATE FUNCTION DEMO")
+    # print("=" * 50)
     
     # Initialize summarizer
     summarizer = HierarchicalGridSummarizer(
@@ -23,11 +23,11 @@ async def demo_update_function():
     # Load existing results
     existing_file = "delhi_gemini_results_w_lesswords_30_level0summary.json"
     
-    print(f"📁 Loading existing results from: {existing_file}")
+    # print(f"📁 Loading existing results from: {existing_file}")
     
     # Demo 1: Update existing cell
-    print(f"\n🔹 DEMO 1: Update existing cell")
-    print(f"   Adding: 'Amazing street food' at (28.571, 77.237)")
+    # print(f"\n🔹 DEMO 1: Update existing cell")
+    # print(f"   Adding: 'Amazing street food' at (28.571, 77.237)")
     
     updated_results = await summarizer.update_with_new_tag(
         lat=28.571,
@@ -38,8 +38,8 @@ async def demo_update_function():
     )
     
     # Demo 2: Add new cell
-    print(f"\n🔹 DEMO 2: Add new cell")
-    print(f"   Adding: 'New tech hub' at (28.6, 77.3)")
+    # print(f"\n🔹 DEMO 2: Add new cell")
+    # print(f"   Adding: 'New tech hub' at (28.6, 77.3)")
     
     updated_results = await summarizer.update_with_new_tag(
         lat=28.6,
@@ -50,8 +50,8 @@ async def demo_update_function():
     )
     
     # Demo 3: Multiple tags in same cell
-    print(f"\n🔹 DEMO 3: Multiple tags in same cell")
-    print(f"   Adding: 'Best biryani place' at (28.571, 77.237)")
+    # print(f"\n🔹 DEMO 3: Multiple tags in same cell")
+    # print(f"   Adding: 'Best biryani place' at (28.571, 77.237)")
     
     updated_results = await summarizer.update_with_new_tag(
         lat=28.571,
@@ -61,17 +61,17 @@ async def demo_update_function():
         output_file="demo_final.json"
     )
     
-    print(f"\n🎉 Demo complete!")
-    print(f"📁 Generated files:")
-    print(f"   • demo_update_1.json - After first update")
-    print(f"   • demo_update_2.json - After second update")
-    print(f"   • demo_final.json - Final result")
+    # print(f"\n🎉 Demo complete!")
+    # print(f"📁 Generated files:")
+    # print(f"   • demo_update_1.json - After first update")
+    # print(f"   • demo_update_2.json - After second update")
+    # print(f"   • demo_final.json - Final result")
 
 def show_update_usage():
     """Show command-line usage examples"""
     
-    print("\n📖 COMMAND-LINE USAGE EXAMPLES")
-    print("=" * 50)
+    # print("\n📖 COMMAND-LINE USAGE EXAMPLES")
+    # print("=" * 50)
     
     examples = [
         {
@@ -88,15 +88,15 @@ def show_update_usage():
         }
     ]
     
-    for i, example in enumerate(examples, 1):
-        print(f"\n{i}. {example['description']}:")
-        print(f"   {example['command']}")
+    # for i, example in enumerate(examples, 1):
+    #     print(f"\n{i}. {example['description']}:")
+    #     print(f"   {example['command']}")
 
 def show_update_features():
     """Show key features of the update function"""
     
-    print("\n🔧 UPDATE FUNCTION FEATURES")
-    print("=" * 50)
+    # print("\n🔧 UPDATE FUNCTION FEATURES")
+    # print("=" * 50)
     
     features = [
         "✅ Updates existing cells with new tags",
@@ -109,14 +109,14 @@ def show_update_features():
         "✅ Handles edge cases (cells outside grid boundaries)"
     ]
     
-    for feature in features:
-        print(f"   {feature}")
+    # for feature in features:
+    #     print(f"   {feature}")
 
 if __name__ == "__main__":
-    print("🚀 Choose an option:")
-    print("1. Run update demo")
-    print("2. Show usage examples")
-    print("3. Show features")
+    # print("🚀 Choose an option:")
+    # print("1. Run update demo")
+    # print("2. Show usage examples")
+    # print("3. Show features")
     
     choice = input("\nEnter choice (1-3): ").strip()
     
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     elif choice == "3":
         show_update_features()
     else:
-        print("Invalid choice. Showing all options:")
+        # print("Invalid choice. Showing all options:")
         show_update_features()
         show_update_usage()
-        print("\nTo run the demo, execute: python update_demo.py and choose option 1")
+        # print("\nTo run the demo, execute: python update_demo.py and choose option 1")

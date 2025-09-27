@@ -101,8 +101,8 @@ Each summary should be at max 5 words describing the area's character based on t
             return result
             
         except json.JSONDecodeError as e:
-            print(f"Failed to parse OpenAI JSON response: {e}")
-            print(f"Raw response: {response_text}")
+            # print(f"Failed to parse OpenAI JSON response: {e}")
+            # print(f"Raw response: {response_text}")
             return {str(i): "Error parsing response" for i in range(num_cells)}
     
     def _get_mock_response(self, num_cells: int) -> Dict[str, str]:
@@ -170,10 +170,10 @@ Return your response as a JSON object:
 Each summary should be at max 5 words describing the area's character based on the combined tags.
 """
             
-            print(f"📤 Sending to Gemini:")
-            print(f"   Model: {self.model}")
-            print(f"   Prompt: {prompt}")
-            print(f"   Cell descriptions: {len(cell_descriptions)} cells")
+            # print(f"📤 Sending to Gemini:")
+            # print(f"   Model: {self.model}")
+            # print(f"   Prompt: {prompt}")
+            # print(f"   Cell descriptions: {len(cell_descriptions)} cells")
             
             # Generate content using Gemini
             response = client.models.generate_content(
@@ -185,10 +185,10 @@ Each summary should be at max 5 words describing the area's character based on t
             return self._parse_response(response_text, len(cell_descriptions))
             
         except ImportError:
-            print("Google Gemini library not installed. Install with: pip install google-generativeai")
+            # print("Google Gemini library not installed. Install with: pip install google-generativeai")
             return self._get_mock_response(len(cell_descriptions))
         except Exception as e:
-            print(f"Gemini API call failed: {e}")
+            # print(f"Gemini API call failed: {e}")
             return self._get_mock_response(len(cell_descriptions))
     
     def _parse_response(self, response_text: str, num_cells: int) -> Dict[str, str]:
@@ -228,8 +228,8 @@ Each summary should be at max 5 words describing the area's character based on t
             return result
             
         except json.JSONDecodeError as e:
-            print(f"Failed to parse Gemini JSON response: {e}")
-            print(f"Raw response: {response_text}")
+            # print(f"Failed to parse Gemini JSON response: {e}")
+            # print(f"Raw response: {response_text}")
             return {str(i): "Error parsing response" for i in range(num_cells)}
     
     def _get_mock_response(self, num_cells: int) -> Dict[str, str]:
@@ -287,15 +287,15 @@ if __name__ == "__main__":
         ]
         
         # Test OpenAI
-        print("Testing OpenAI provider...")
+        # print("Testing OpenAI provider...")
         openai_provider = SummaryProviderFactory.create_provider("openai")
         openai_result = await openai_provider.summarize_batch(cell_descriptions, 0, 1)
-        print(f"OpenAI result: {openai_result}")
+        # print(f"OpenAI result: {openai_result}")
         
         # Test Gemini
-        print("\nTesting Gemini provider...")
+        # print("\nTesting Gemini provider...")
         gemini_provider = SummaryProviderFactory.create_provider("gemini")
         gemini_result = await gemini_provider.summarize_batch(cell_descriptions, 0, 1)
-        print(f"Gemini result: {gemini_result}")
+        # print(f"Gemini result: {gemini_result}")
     
     asyncio.run(test_providers())
