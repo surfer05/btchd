@@ -10,8 +10,8 @@ const MapLabels = ({ points }) => {
   const minStrength = Math.min(...strengths);
   const maxStrength = Math.max(...strengths);
 
-  const minFont = 10; // px
-  const maxFont = 40; // px - increased from 28
+  const minFont = 14; // px
+  const maxFont = 36; // px - increased from 28
 
   // Sort DESCENDING by strength so higher strength overlays lower (appears on top)
   const sortedPoints = [...points].sort((a, b) => b.strength - a.strength);
@@ -33,7 +33,7 @@ const MapLabels = ({ points }) => {
 
         const icon = L.divIcon({
           // Pass CSS variables; avoid inline font-size so CSS can be responsive
-          html: `<div class="label-text" style="--scale:${norm};--z:${zIndexValue}">${point.name}</div>`,
+          html: `<div class="label-text" style="--scale:${norm};--z:${zIndexValue}">${point.label}</div>`,
           className: "casual-label",
           // Let CSS/content drive size & anchor; do not force nulls
           // iconSize: undefined,
@@ -42,10 +42,10 @@ const MapLabels = ({ points }) => {
 
         return (
           <Marker
-            key={`${point.latitude}-${point.longitude}-${idx}`}
-            position={[point.latitude, point.longitude]}
+            key={`${point.lat}-${point.lon}-${idx}`}
+            position={[point.lat, point.lon]}
             icon={icon}
-            zIndexOffset={point.strength * 100}
+            zIndexOffset={-point.strength * 100}
           />
         );
       })}
