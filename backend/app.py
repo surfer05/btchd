@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from server.labels import generate_city_labels
+from backend.labels import get_city_labels
 
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def echo():
 @app.route("/label", methods=["POST"])
 def post_label():
     data = request.get_json()
-    # {'proofHex': '0x', 'review': {'categories': ['Location'], 'text': 'Beta', 'rating': 5}, 'expiresAt': 1759007394, 'publicInputsHex': '0x', 'geohash7': 'ttnf3nz'}
+    # {'proof': '0x', 'review': {'categories': ['Location'], 'text': 'Beta', 'rating': 5}, 'expiresAt': 1759007394, 'publicInputsHex': '0x', 'geohash7': 'ttnf3nz'}
     proof = data.get("proof", None)
     if proof is None:
         return "Proof not found", 400
@@ -38,7 +38,7 @@ def post_label():
 def get_labels():
     city = request.args.get("city")
     level = request.args.get("level", "0")
-    results = generate_city_labels(city, level)
+    results = get_city_labels(city, level)
     return jsonify({"data": results}), 200
 
 
