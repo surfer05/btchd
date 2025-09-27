@@ -28,13 +28,18 @@ def generate_city_labels(city, level):
 
 
 def get_city_labels(city, level):
+    level = int(level)
     city_data = get_city_data(city, levels=True)
     return city_data.levels.get(level, [])
 
 
+def add_label(city, data):
+    label = None
+    pass
+
 if __name__ == "__main__":
     city = "delhi"
-    level = 3
+    level = "2"
     labels = get_city_labels(city, level)
     print(len(labels))
     print(labels[:3])

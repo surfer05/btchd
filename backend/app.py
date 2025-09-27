@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from backend.labels import get_city_labels
+from backend.proofs import add_proof, get_proofs_data
+from utils.geo import decode_geohash
 
 
 app = Flask(__name__)
@@ -17,11 +19,11 @@ def echo():
     return jsonify({"Data": data})
 
 
-@app.route("/label", methods=["POST"])
+@app.route("/submit", methods=["POST"])
 def post_label():
     data = request.get_json()
     # {'proof': '0x', 'review': {'categories': ['Location'], 'text': 'Beta', 'rating': 5}, 'expiresAt': 1759007394, 'publicInputsHex': '0x', 'geohash7': 'ttnf3nz'}
-    proof = data.get("proof", None)
+    proof = data.get("proofHex", None)
     if proof is None:
         return "Proof not found", 400
     review = data.get("review", None)
@@ -31,6 +33,12 @@ def post_label():
     categories = review.get("categories")
     rating = review.get("rating")
     # TODO: add data to DB
+    lat, lon = decode_geohash(data.get("geohash7"))
+    data["latitude"] = lat
+    data["longitude"] = lon
+    add_proof(data)
+
+    print(f"Label: {label}, Categories: {categories}, Rating: {rating}")
     return "Review successful", 200
 
 
@@ -40,6 +48,12 @@ def get_labels():
     level = request.args.get("level", "0")
     results = get_city_labels(city, level)
     return jsonify({"data": results}), 200
+
+
+@app.route("/proofs", methods=["GET"])
+def get_proofs():
+    data = get_proofs_data()
+    return jsonify({"data": data}), 200
 
 
 if __name__ == "__main__":

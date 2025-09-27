@@ -1,0 +1,30 @@
+[
+  {
+    "proof": "0x",
+    "review": {
+      "categories": [
+        "Location"
+      ],
+      "text": "Beta",
+      "rating": 5
+    },
+    "expiresAt": 1759007394,
+    "publicInputsHex": "0x",
+    "geohash7": "ttnf3nz"
+  },
+  {
+    "publicInputsHex": "32383536303439362c37373034383331302c32383535393333342c37373034383435342c323236",
+    "geohash7": "ttnf3r0",
+    "review": {
+      "rating": 5,
+      "text": "Hello",
+      "categories": [
+        "Cleanliness"
+      ]
+    },
+    "expiresAt": 1759016434,
+    "proofHex": "6d6f636b5f70726f6f665f32383536303439365f37373034383331305f32383535393333345f37373034383435345f323236",
+    "latitude": 14.280166625976562,
+    "longitude": 38.52424621582031
+  }
+]
