@@ -22,16 +22,11 @@ struct ContentView: View {
     @State private var phase: Phase = .idle
     @State private var showAlert = false
     @State private var alertTitle = ""
-<<<<<<< Updated upstream
-    @State private var alertMessage = ""    
-    @State private var hasLoadedInitialLocation = false
-=======
     @State private var alertMessage = ""
 
     @State private var showReview = false
     @State private var isPostingReview = false
     @State private var latestReviews: [ReviewRow] = []
->>>>>>> Stashed changes
 
     private let lowMem = true
     private let onChain = true
@@ -57,41 +52,10 @@ struct ContentView: View {
                             .foregroundStyle(.blue.opacity(0.18))
                             .mapOverlayLevel(level: .aboveRoads)
                     }
-<<<<<<< Updated upstream
-                    // geofence circle
-                    MapCircle(center: target, radius: radiusMeters)
-                        .foregroundStyle(.blue.opacity(0.18))
-                        .mapOverlayLevel(level: .aboveRoads)
-                }
-                .frame(height: 360)
-                .onAppear {
-                    // ask for when-in-use; simulator requires you to set a fake location
-                    locMgr.requestWhenInUseAuthorization()  // must be called before using location services. :contentReference[oaicite:2]{index=2}
-                    
-                    // If we only have When-In-Use, request "Always"
-                    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-                        locMgr.requestAlwaysAuthorization()   // may show a second system prompt
-                    }
-                    
-                    // Load current location on startup
-                    if !hasLoadedInitialLocation {
-                        loadCurrentLocation()
-                    }
-                }
-                // tap anywhere to set target (MapReader converts screen point -> coordinate)
-                .gesture(SpatialTapGesture().onEnded { g in
-                    let pt = CGPoint(x: g.location.x, y: g.location.y)
-                    if let coord = proxy.convert(pt, from: .local) {  // MapProxy convert
-                        target = coord
-                    }
-                })
-                    .mapControls { MapUserLocationButton(); MapCompass() }
-=======
                     .frame(height: 360)
                     .onAppear {
                         // ask for when-in-use; simulator requires you to set a fake location
                         locMgr.requestWhenInUseAuthorization()  // must be called before using location services. :contentReference[oaicite:2]{index=2}
->>>>>>> Stashed changes
 
                         // If we only have When-In-Use, request "Always"
                         if locMgr.authorizationStatus == .authorizedWhenInUse {
@@ -239,97 +203,6 @@ struct ContentView: View {
                 }
             }
         }
-<<<<<<< Updated upstream
-    }
-    Button("OK", role: .cancel) {}
-} message: {
-    Text(alertMessage)
-}
-    }
-
-func loadCurrentLocation() {
-    hasLoadedInitialLocation = true
-    
-    // Check if we have location permission
-    let status = CLLocationManager.authorizationStatus()
-    if status == .denied || status == .restricted {
-        log = "Location access denied. Using default location."
-        return
-    }
-    
-    // Request location if we don't have permission yet
-    if status == .notDetermined {
-        locMgr.requestWhenInUseAuthorization()
-        // We'll try again after permission is granted
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            loadCurrentLocation()
-        }
-        return
-    }
-    
-    // Get current location
-    Task {
-        let result: Result<CLLocation, CLError> = await withCheckedContinuation { cc in
-            locGetter.requestResult { cc.resume(returning: $0) }
-        }
-        
-        switch result {
-        case .success(let location):
-            DispatchQueue.main.async {
-                // Center map on current location
-                self.position = .region(.init(
-                    center: location.coordinate,
-                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                ))
-                // Set target to current location initially
-                self.target = location.coordinate
-                self.log = "📍 Located at \(String(format: "%.4f", location.coordinate.latitude)), \(String(format: "%.4f", location.coordinate.longitude))"
-            }
-        case .failure(let error):
-            DispatchQueue.main.async {
-                self.log = "❌ Failed to get location: \(error.localizedDescription)"
-            }
-        }
-    }
-}
-
-func prove() async {
-    proving = true
-    defer { proving = false }
-
-    let mgr = CLLocationManager()
-    mgr.allowsBackgroundLocationUpdates = true   // needs Background Modes → Location updates
-    mgr.showsBackgroundLocationIndicator = true  // optional visual indicator when active in bg
-
-    phase = .locating
-
-    // Modern authorization check (instance property; class method is deprecated). :contentReference[oaicite:3]{index=3}
-    let status = CLLocationManager.authorizationStatus()  
-    if status == .notDetermined {
-        mgr.requestWhenInUseAuthorization()
-        try? await Task.sleep(nanoseconds: 800_000_000)
-    }
-
-    // If we only have When-In-Use, request "Always"
-    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-        mgr.requestAlwaysAuthorization()   // may show a second system prompt
-        try? await Task.sleep(nanoseconds: 800_000_000)
-    }
-
-    let current = CLLocationManager.authorizationStatus()
-    if current == .denied || current == .restricted {
-        phase = .idle
-        alertTitle = "Location Disabled"
-        alertMessage = "Enable “While Using” and Precise for this app in Settings to continue."
-        showAlert = true
-        return
-    }
-
-    // Ask for one-time precise if we only have approximate. :contentReference[oaicite:4]{index=4}
-    if mgr.accuracyAuthorization == .reducedAccuracy {
-        await withCheckedContinuation { cc in
-            mgr.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "GeofenceProof") { _ in cc.resume(returning: ()) }
-=======
         .alert(alertTitle, isPresented: $showAlert) {
             Button("Open Settings") {
                 if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -339,7 +212,6 @@ func prove() async {
             Button("OK", role: .cancel) {}
         } message: {
             Text(alertMessage)
->>>>>>> Stashed changes
         }
     }
 
