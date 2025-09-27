@@ -55,6 +55,49 @@ class HierarchicalGridSummarizer:
         self.grid_delta = grid_delta  # Grid cell size
         self.summary_provider = SummaryProviderFactory.create_provider(provider_type, api_key=api_key)
         print("Using summary provider: ", self.summary_provider)
+    
+    def _has_valid_tag(self, combined_tag) -> bool:
+        """Check if a combined_tag has valid content, handling both string and dict formats"""
+        if isinstance(combined_tag, dict):
+            # New format with summary and confidence
+            summary = combined_tag.get("summary", "")
+            return bool(summary and summary.strip())
+        elif isinstance(combined_tag, str):
+            # Old format with just string
+            return bool(combined_tag.strip())
+        else:
+            return False
+    
+    def _has_multiple_tags(self, combined_tag) -> bool:
+        """Check if a combined_tag has multiple tags, handling both string and dict formats"""
+        if isinstance(combined_tag, dict):
+            # New format with summary and confidence
+            summary = combined_tag.get("summary", "")
+            return bool(summary and ';' in summary)
+        elif isinstance(combined_tag, str):
+            # Old format with just string
+            return bool(combined_tag and ';' in combined_tag)
+        else:
+            return False
+    
+    def _get_tag_text(self, combined_tag) -> str:
+        """Get the text content from a combined_tag, handling both string and dict formats"""
+        if isinstance(combined_tag, dict):
+            # New format with summary and confidence
+            return combined_tag.get("summary", "")
+        elif isinstance(combined_tag, str):
+            # Old format with just string
+            return combined_tag
+        else:
+            return ""
+    
+    def _get_tag_list(self, combined_tag) -> List[str]:
+        """Get a list of tags from a combined_tag, handling both string and dict formats"""
+        text = self._get_tag_text(combined_tag)
+        if text:
+            return text.split('; ')
+        else:
+            return []
         
     def load_data(self, json_path: str = None, tags_data = None) -> List[Tag]:
         """Load tags from JSON file"""
@@ -177,7 +220,7 @@ class HierarchicalGridSummarizer:
         # print(f"   Empty cells: {grid_lat_cells * grid_lon_cells - cells_with_tags}")
         
         # Count cells with multiple tags
-        multi_tag_cells = sum(1 for cell in grid.values() if ';' in cell.combined_tag)
+        multi_tag_cells = sum(1 for cell in grid.values() if self._has_multiple_tags(cell.combined_tag))
         # print(f"   Cells with multiple tags: {multi_tag_cells}")
         
         return grid
@@ -189,7 +232,7 @@ class HierarchicalGridSummarizer:
         # Find cells with multiple tags
         cells_with_multiple_tags = []
         for coord, cell in grid.items():
-            if ';' in cell.combined_tag:
+            if self._has_multiple_tags(cell.combined_tag):
                 cells_with_multiple_tags.append(cell)
         
         if not cells_with_multiple_tags:
@@ -210,7 +253,7 @@ class HierarchicalGridSummarizer:
             # Create descriptions for cells with multiple tags
             cell_descriptions = []
             for i, cell in enumerate(batch):
-                tags = cell.combined_tag.split('; ')
+                tags = self._get_tag_list(cell.combined_tag)
                 cell_descriptions.append(f"Cell {i+1} (lat: {cell.lat:.3f}, lon: {cell.lon:.3f}): {', '.join(tags)}")
             
             try:
@@ -276,8 +319,8 @@ class HierarchicalGridSummarizer:
                     # Combine SUMMARIZED tags from all cells in kernel
                     combined_tags = []
                     for cell in kernel_cells:
-                        if cell.combined_tag:
-                            combined_tags.append(cell.combined_tag)
+                        if self._has_valid_tag(cell.combined_tag):
+                            combined_tags.append(self._get_tag_text(cell.combined_tag))
                     
                     combined_tag = "; ".join(combined_tags) if combined_tags else ""
                     
@@ -322,7 +365,7 @@ class HierarchicalGridSummarizer:
         kernel_size = 2 ** level if level > 0 else 1
         
         # Filter cells with tags
-        cells_with_tags = [cell for cell in cells if cell.combined_tag.strip()]
+        cells_with_tags = [cell for cell in cells if self._has_valid_tag(cell.combined_tag)]
         
         if not cells_with_tags:
             # print(f"   ⚠️  No cells with tags, skipping summarization")
@@ -343,7 +386,7 @@ class HierarchicalGridSummarizer:
             # Create batch descriptions
             cell_descriptions = []
             for i, cell in enumerate(batch):
-                cell_descriptions.append(f"Cell {i+1} (lat: {cell.lat:.3f}, lon: {cell.lon:.3f}): {cell.combined_tag}")
+                cell_descriptions.append(f"Cell {i+1} (lat: {cell.lat:.3f}, lon: {cell.lon:.3f}): {self._get_tag_text(cell.combined_tag)}")
             
             try:
                 # print(f"     🔄 Calling {self.summary_provider.__class__.__name__} API...")
