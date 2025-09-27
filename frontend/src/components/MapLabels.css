@@ -1,0 +1,65 @@
+:root {
+  --label-amp: 1.6;
+}
+
+/* Leaflet's DivIcon wrapper */
+.casual-label {
+}
+
+.casual-label .label-text {
+  font-family: "Comic Sans MS", cursive, fantasy;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  -webkit-text-stroke: 0.5px #000;
+
+  /* Fallback */
+  font-size: calc(16px * var(--label-amp, 1.6));
+
+  /*
+    Stronger separation at fixed viewport:
+    - Increase coefficient on --scale from 2.2vw -> 3.6vw
+    - Slightly raise max so strong labels are not clamped early
+  */
+  font-size: clamp(
+    calc(14px * var(--label-amp, 1.6)),
+    /* floor */ calc((1.8vw + var(--scale, 0) * 3.6vw) * var(--label-amp, 1.6)),
+    /* bigger spread */ calc(42px * var(--label-amp, 1.6)) /* higher ceiling */
+  );
+
+  position: relative;
+  z-index: var(--z, 1000);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1.05;
+}
+:root {
+  --label-amp: 1.25;
+} /* was 1.6; lowers desktop baseline [web:13][web:10] */
+
+.casual-label .label-text {
+  font-size: calc(16px * var(--label-amp, 1.25));
+  /* Smaller viewport slope (1.2vw), bigger strength spread (3.2vw), lower max (38px) */
+  font-size: clamp(
+    calc(13px * var(--label-amp, 1.25)),
+    /* floor down a bit */
+      calc((1.2vw + var(--scale, 0) * 3.2vw) * var(--label-amp, 1.25)),
+    /* more delta from strength */ calc(38px * var(--label-amp, 1.25))
+      /* cap reduces desktop bloat */
+  );
+}
+
+/* Small phones remain balanced; we keep a milder slope there */
+@media (max-width: 420px) {
+  .casual-label .label-text {
+    font-size: clamp(
+      calc(13px * var(--label-amp, 1.6)),
+      calc((3vw + var(--scale, 0) * 2.8vw) * var(--label-amp, 1.6)),
+      calc(30px * var(--label-amp, 1.6))
+    );
+  }
+}
