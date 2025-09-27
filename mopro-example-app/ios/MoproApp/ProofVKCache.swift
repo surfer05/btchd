@@ -1,5 +1,4 @@
 import Foundation
-//import MoproFFI
 
 final class ProofVKCache {
     static let shared = ProofVKCache()

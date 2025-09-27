@@ -1,9 +1,7 @@
 import CoreLocation
-// import MoproFFI
 import CryptoKit
 import MapKit
 import SwiftUI
-
 
 struct ContentView: View {
     // Map state
@@ -28,6 +26,8 @@ struct ContentView: View {
     @State private var showReview = false
     @State private var isPostingReview = false
     @State private var latestReviews: [ReviewRow] = []
+    @State private var currentProof: Data? = nil
+    @State private var currentPublicInputs: Data? = nil
 
     private let lowMem = true
     private let onChain = true
@@ -170,7 +170,8 @@ struct ContentView: View {
                     isPostingReview = true
                     do {
                         try await ReviewAPI.submit(
-                            target: target, categories: categories, rating: rating, text: text)
+                            target: target, categories: categories, rating: rating, text: text,
+                            proof: currentProof, publicInputs: currentPublicInputs)
                         log = "✅ Review submitted. (We never upload your raw GPS.)"
                         // refresh reviews for neighborhood (prefix length 5 ≈ larger area)
                         let ghPrefix = String(
@@ -318,29 +319,22 @@ struct ContentView: View {
             return
         }
 
-        do {
-            let vk = try ProofVKCache.shared.getVK(
-                circuitPath: circuitPath, srsPath: srsPath,
-                onChain: onChain, lowMem: lowMem
-            )
-            let proof = try generateNoirProof(
-                circuitPath: circuitPath, srsPath: srsPath,
-                inputs: inputs, onChain: onChain, vk: vk, lowMemoryMode: lowMem
-            )
-            let ok = try verifyNoirProof(
-                circuitPath: circuitPath, proof: proof,
-                onChain: onChain, vk: vk, lowMemoryMode: lowMem
-            )
+        // Mock implementation for testing proof transmission
+        // TODO: Replace with actual mopro integration once imports are fixed
 
-            // ⬇️ NEW: open the Add Review sheet immediately after a successful local verify
-            showReview = true
+        // Create mock proof data
+        let mockProof = "mock_proof_\(inputs.joined(separator: "_"))".data(using: .utf8) ?? Data()
+        let mockPublicInputs = inputs.joined(separator: ",").data(using: .utf8) ?? Data()
 
-            phase = .idle
-            log = "✅ proof bytes: \(proof.count) • verified: \(ok)"
-        } catch {
-            phase = .idle
-            log = "❌ \(error)"
-        }
+        // Store the proof and public inputs for review submission
+        currentProof = mockProof
+        currentPublicInputs = mockPublicInputs
+
+        // Open the Add Review sheet
+        showReview = true
+
+        phase = .idle
+        log = "✅ Mock proof generated • ready for review submission"
     }
 
 }

@@ -30,7 +30,15 @@ function save(db) {
 // POST /submit — add/update a review (one per addr+geohash per 24h)
 app.post("/submit", (req, res) => {
   try {
-    const { addr, geohash7, review } = req.body || {};
+    const {
+      addr,
+      signature,
+      proofHex,
+      publicInputsHex,
+      geohash7,
+      review,
+      expiresAt,
+    } = req.body || {};
     if (
       !geohash7 ||
       !review ||
@@ -40,6 +48,12 @@ app.post("/submit", (req, res) => {
     ) {
       return res.status(400).json({ ok: false, error: "invalid payload" });
     }
+
+    // Log the proof information for debugging
+    console.log("Received proof data:");
+    console.log("- Proof Hash:", proofHex);
+    console.log("- Public Inputs:", publicInputsHex);
+    console.log("- Expires At:", expiresAt);
     const now = Math.floor(Date.now() / 1000);
     const a =
       addr && typeof addr === "string"
@@ -59,6 +73,10 @@ app.post("/submit", (req, res) => {
       rating: review.rating,
       text: review.text,
       timestamp: now,
+      proofHex: proofHex || "0x",
+      publicInputsHex: publicInputsHex || "0x",
+      expiresAt: expiresAt || 0,
+      signature: signature || null,
     });
     save(db);
     res.json({ ok: true, data: db });

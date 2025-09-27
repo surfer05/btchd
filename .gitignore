@@ -95,3 +95,7 @@ srs_cache/*.xcuserdata/
 # venv
 .venv/
 **/walrusdb.egg-info/
+
+# ios user-specifc files
+mopro-example-app/ios/MoproApp.xcodeproj
+mopro-example-app/ios/MoproApp/Info.plist
