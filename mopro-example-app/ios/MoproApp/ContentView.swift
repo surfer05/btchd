@@ -177,7 +177,8 @@ struct ContentView: View {
                             Geohash.encode(
                                 lat: target.latitude, lon: target.longitude, precision: 7
                             ).prefix(5))
-                        latestReviews = try await ReviewAPI.fetch(prefix: ghPrefix)
+                        // latestReviews = try await ReviewAPI.fetch(prefix: ghPrefix)
+                        latestReviews = []
                     } catch {
                         log = "❌ Review submit failed: \(error.localizedDescription)"
                     }

@@ -2,7 +2,7 @@ import Foundation
 import CoreLocation
 
 enum ReviewAPI {
-    static var baseURL = URL(string: "http://localhost:8787")! // change to your LAN IP on device
+    static var baseURL = URL(string: "https://super-duper-space-waffle-xx49jw799gw3pg7g-5000.app.github.dev")! // change to your LAN IP on device
 
     static func submit(target: CLLocationCoordinate2D,
                        categories: [String], rating: Int, text: String) async throws {
@@ -12,7 +12,7 @@ enum ReviewAPI {
                                     review: .init(categories: categories, rating: rating, text: text),
                                     expiresAt: expires)
 
-        var req = URLRequest(url: baseURL.appendingPathComponent("/submit"))
+        var req: URLRequest = URLRequest(url: baseURL.appendingPathComponent("/label"))
         req.httpMethod = "POST"
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = try JSONEncoder().encode(payload)
