@@ -1,5 +1,6 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import "./MapLabels.css";
 
 const MapLabels = ({ points }) => {
   if (!points || points.length === 0) return null;
@@ -9,8 +10,8 @@ const MapLabels = ({ points }) => {
   const minStrength = Math.min(...strengths);
   const maxStrength = Math.max(...strengths);
 
-  const minFont = 14; // px
-  const maxFont = 36; // px - increased from 28
+  const minFont = 10; // px
+  const maxFont = 40; // px - increased from 28
 
   // Sort DESCENDING by strength so higher strength overlays lower (appears on top)
   const sortedPoints = [...points].sort((a, b) => b.strength - a.strength);
@@ -19,34 +20,24 @@ const MapLabels = ({ points }) => {
     <>
       {sortedPoints.map((point, idx) => {
         // Map strength to font size
-        const fontSize =
-          minFont +
-          ((point.strength - minStrength) / (maxStrength - minStrength || 1)) *
-            (maxFont - minFont);
+        // Replace norm computation
+        // norm remap to boost top strengths without inflating all labels
+        const raw =
+          maxStrength - minStrength
+            ? (point.strength - minStrength) / (maxStrength - minStrength)
+            : 0;
+        const norm = Math.pow(raw, 1.25); // mild, adjust 1.2–1.4 for effect [web:16][web:10]
 
         // Calculate z-index based on strength (higher strength = higher z-index)
         const zIndexValue = 1000 + point.strength * 100;
 
         const icon = L.divIcon({
-          html: `<div style="
-            font-size: ${fontSize}px;
-            font-weight: bold;
-            color: white;
-            white-space: nowrap;
-            font-family: 'Comic Sans MS', cursive, fantasy;
-            text-align: center;
-            position: relative;
-            z-index: ${zIndexValue};
-            text-shadow: 
-              -1px -1px 0 black,
-              1px -1px 0 black,
-              -1px 1px 0 black,
-              1px 1px 0 black;
-            -webkit-text-stroke: 0.5px black;
-          ">${point.name}</div>`,
+          // Pass CSS variables; avoid inline font-size so CSS can be responsive
+          html: `<div class="label-text" style="--scale:${norm};--z:${zIndexValue}">${point.name}</div>`,
           className: "casual-label",
-          iconSize: [null, null], // Auto size
-          iconAnchor: [null, null], // Auto anchor
+          // Let CSS/content drive size & anchor; do not force nulls
+          // iconSize: undefined,
+          // iconAnchor: undefined,
         });
 
         return (
@@ -54,18 +45,8 @@ const MapLabels = ({ points }) => {
             key={`${point.latitude}-${point.longitude}-${idx}`}
             position={[point.latitude, point.longitude]}
             icon={icon}
-            zIndexOffset={point.strength * 100} // Higher strength = higher z-index
-          >
-            <Popup>
-              <div style={{ fontFamily: "Comic Sans MS, cursive, fantasy" }}>
-                <b>{point.name}</b>
-                <br />
-                <span style={{ color: "#666", fontSize: "13px" }}>
-                  Strength: {point.strength}
-                </span>
-              </div>
-            </Popup>
-          </Marker>
+            zIndexOffset={point.strength * 100}
+          />
         );
       })}
     </>
