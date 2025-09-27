@@ -142,7 +142,8 @@ class GeminiSummaryProvider(SummaryProvider):
         """Summarize cells using Google Gemini"""
         if not self.api_key:
             # Mock response for testing
-            return self._get_mock_response(len(cell_descriptions))
+            # return self._get_mock_response(len(cell_descriptions))
+            raise Exception("No API key found for Gemini")
         
         try:
             from google import genai

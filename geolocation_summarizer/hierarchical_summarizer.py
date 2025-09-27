@@ -54,6 +54,7 @@ class HierarchicalGridSummarizer:
         self.api_key = api_key or os.getenv('OPENAI_API_KEY')
         self.grid_delta = grid_delta  # Grid cell size
         self.summary_provider = SummaryProviderFactory.create_provider(provider_type, api_key=api_key)
+        print("Using summary provider: ", self.summary_provider)
         
     def load_data(self, json_path: str = None, tags_data = None) -> List[Tag]:
         """Load tags from JSON file"""

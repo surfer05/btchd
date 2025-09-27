@@ -3,7 +3,9 @@ from pathlib import Path
 from geolocation_summarizer.hierarchical_summarizer import summarize_data
 import asyncio
 from utils.args import Args
-
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 def get_city_data(city):
     file_path = Path(__file__).parent.parent / "data" / f"{city}.json"
@@ -13,7 +15,7 @@ def get_city_data(city):
 def generate_city_labels(city, level):
     city_data = get_city_data(city)
     args = Args(
-        api_key="abc123",
+        api_key=os.getenv("GEMINI_API_KEY"),
         grid_delta=0.01,
         provider="gemini",
         batch_size=30,
