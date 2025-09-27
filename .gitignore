@@ -1,3 +1,8 @@
+
+.env
+*.json
+*target/
+
 # Heavy files folder
 heavy_files/
 mopro
@@ -85,3 +90,4 @@ incremental/
 # Cache
 srs_cache/*.xcuserdata/
 *.xcuserdata/
+
