@@ -1,3 +1,8 @@
+
+.env
+*.json
+*target/
+
 # Heavy files folder
 heavy_files/
 mopro
