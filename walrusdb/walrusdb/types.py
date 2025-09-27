@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union, Type
+from typing import Dict, List, Optional, Union, Type, Any
 from pydantic import BaseModel
 
 
@@ -9,20 +9,25 @@ class IndexDefinition(BaseModel):
     name: str
     field: str
     type: str  # "string" | "number"
-    index_file: str
+    index_id: str
+    collection_id: str
 
 
 class CollectionDefinition(BaseModel):
     name: str
-    fields: Dict[str]
-    indexes: List[str] 
-    collection_file: str
+    fields: Dict[str, str]
+    collection_id: str
 
 
 class DatabaseDefinition(BaseModel):
     name: str
     collections: Dict[str, CollectionDefinition]
     indexes: Dict[str, IndexDefinition]
+
+
+class Object(BaseModel):
+    blob_id: str
+    data: Any
 
 
 # Collections

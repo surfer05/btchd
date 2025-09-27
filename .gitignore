@@ -89,3 +89,4 @@ srs_cache/*.xcuserdata/
 
 # venv
 .venv/
+**/walrusdb.egg-info/

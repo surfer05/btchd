@@ -1,5 +1,7 @@
 from walrus import WalrusClient
-from db.utils import Singleton
+import bson
+from walrusdb.utils import Singleton
+
 
 class DBO(metaclass=Singleton):
     def __init__(self, publisher_url: str = None, aggregator_url: str = None):
@@ -14,19 +16,34 @@ class DBO(metaclass=Singleton):
             aggregator_base_url=self.aggregator_url,
         )
 
-    def create_blob_from_data(self, data: bytes) -> str:
+    def create_blob_from_data(self, data: dict) -> str:
+        if not isinstance(data, dict):
+            raise ValueError("Data must be a dictionary")
+        data = bson.dumps(data)
         response = self.client.put_blob(data=data)
         blob_id = response.get("newlyCreated").get("blobObject").get("blobId")
         return blob_id
 
     def create_blob_from_file(self, file_path: str) -> str:
+        # TODO: remove this method
         response = self.client.put_blob_from_file(file_path)
         blob_id = response.get("newlyCreated").get("blobObject").get("blobId")
         return blob_id
 
     def get_blob_data(self, blob_id: str) -> str:
         blob_content = self.client.get_blob(blob_id)
-        return blob_content.decode("utf-8")
+        return bson.loads(blob_content)
+
+    def update_blob(self, blob_id, updates, partial=False):
+        if partial:
+            data = self.get_blob_data(blob_id)
+            data = {**data, **updates}
+        self.delete_blob(blob_id)
+        return self.create_blob_from_data(data.encode())
+    
+    def delete_blob(self, blob_id):
+        # TODO: Implement blob deletion
+        pass
 
 
 if __name__ == "__main__":

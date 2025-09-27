@@ -1,4 +1,4 @@
-from db.types import STRING_TO_FIELD
+from walrusdb.types import STRING_TO_FIELD
 from typing import List, Dict, Any
 
 
@@ -11,10 +11,12 @@ class Singleton(type):
         return cls._instances[cls]
 
 
-def validate_objects(schema: Dict[str, str], objects: List[Dict[str, Any]]) -> List[bool]:
+def validate_objects(
+    schema: Dict[str, str], objects: List[Dict[str, Any]]
+) -> List[bool]:
     """
     Validate a list of objects against a schema.
-    
+
     :param schema: Dict with field_name -> expected_type (str, int, float).
     :param objects: List of objects (dicts) to validate.
     :return: List of booleans, one per object (True if valid, False otherwise).
