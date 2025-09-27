@@ -1,39 +1,34 @@
 import CoreLocation
 
 final class LocationOnce: NSObject, CLLocationManagerDelegate {
-    private let mgr = CLLocationManager()
-    private var cont: ((CLLocation) -> Void)?
+    private let manager = CLLocationManager()
+    private var completion: ((Result<CLLocation, CLError>) -> Void)?
 
-    override init() {
-        super.init()
-        mgr.delegate = self
-        mgr.desiredAccuracy = kCLLocationAccuracyBest
+    func requestResult(_ completion: @escaping (Result<CLLocation, CLError>) -> Void) {
+        self.completion = completion
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestLocation()  // one-shot fix per Apple. :contentReference[oaicite:1]{index=1}
     }
 
-    func request(_ cont: @escaping (CLLocation) -> Void) {
-        self.cont = cont
-
-        // Request when-in-use first.
-        let status = mgr.authorizationStatus
-        if status == .notDetermined {
-            mgr.requestWhenInUseAuthorization()
-        }
-
-        // If approximate, ask for temporary full accuracy (purpose key must match Info.plist dictionary).
-        if mgr.accuracyAuthorization == .reducedAccuracy {
-            mgr.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "GeofenceProof") { _ in
-                self.mgr.requestLocation()
-            }
-        } else {
-            mgr.requestLocation()
-        }
+    // Keep your existing convenience wrapper (optional, for backwards compatibility)
+    func request(_ success: @escaping (CLLocation) -> Void) {
+        requestResult { if case .success(let loc) = $0 { success(loc) } }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let loc = locations.last { cont?(loc) }
+        if let loc = locations.last {
+            completion?(.success(loc))
+            completion = nil; manager.delegate = nil
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location error:", error.localizedDescription)
+        if let e = error as? CLError {
+            completion?(.failure(e))   // .denied, .locationUnknown, etc. :contentReference[oaicite:2]{index=2}
+        } else {
+            completion?(.failure(CLError(.locationUnknown)))
+        }
+        completion = nil; manager.delegate = nil
     }
 }

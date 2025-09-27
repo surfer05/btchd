@@ -16,13 +16,23 @@ struct ContentView: View {
     @State private var pasteLon = ""
     @State private var log = "Ready."
     @State private var proving = false
+    @StateObject private var search = SearchVM()
+
+    @State private var phase: Phase = .idle
+    @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""    
 
     private let lowMem = true
     private let onChain = true
     private let locMgr = CLLocationManager()
+    private let locGetter = LocationOnce()
+    private enum Phase { case idle, locating, proving }
+
 
     var body: some View {
-        VStack(spacing: 12) {
+        NavigationStack {
+            VStack(spacing: 12) {
             // Map: fully interactive; tap anywhere to set target
             MapReader { proxy in
                 Map(position: $position, interactionModes: .all) {
@@ -49,12 +59,41 @@ struct ContentView: View {
                         target = coord
                     }
                 })
+                    .mapControls { MapUserLocationButton(); MapCompass() }
+
             }
+
+            // ⬇️ Suggestions list (shows only while typing)
+if !search.query.isEmpty && !search.suggestions.isEmpty {
+    List(search.suggestions, id: \.self) { s in
+        Button {
+            search.resolve(s) { coord in
+    DispatchQueue.main.async {
+        target = coord
+        position = .region(.init(center: coord, span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01)))
+        search.query = ""
+        search.suggestions = []
+    }
+}
+        } label: {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(s.title).font(.body)
+                if !s.subtitle.isEmpty {
+                    Text(s.subtitle).font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+    .listStyle(.plain)
+    .frame(maxHeight: 220)
+}
+
 
             // Paste coordinates (optional)
             HStack {
-                TextField("Paste latitude", text: $pasteLat).textFieldStyle(.roundedBorder)
-                TextField("Paste longitude", text: $pasteLon).textFieldStyle(.roundedBorder)
+                TextField("Paste latitude", text: $pasteLat).textFieldStyle(.roundedBorder).keyboardType(.numbersAndPunctuation)
+                TextField("Paste longitude", text: $pasteLon).textFieldStyle(.roundedBorder).keyboardType(.numbersAndPunctuation)
+
                 Button("Set") {
                     if let lat = Double(pasteLat), let lon = Double(pasteLon) {
                         target = .init(latitude: lat, longitude: lon)
@@ -80,61 +119,137 @@ struct ContentView: View {
             ScrollView { Text(log).font(.system(.footnote, design: .monospaced)) }
                 .frame(maxHeight: 160)
         }
-        .padding()
-    }
-
-    // MARK: - Proof flow (unchanged from earlier)
-    func prove() async {
-        proving = true
-        defer { proving = false }
-
-        // If Approximate was granted, ask once for temporary precise using your purpose key (Info.plist)
-        if CLLocationManager().accuracyAuthorization == .reducedAccuracy {
-            await withCheckedContinuation { cc in
-                CLLocationManager().requestTemporaryFullAccuracyAuthorization(withPurposeKey: "GeofenceProof") { _ in cc.resume(returning: ()) }
-            } // Apple’s API for one-time precise. :contentReference[oaicite:3]{index=3}
+        .padding().navigationTitle("Prove geofence")
         }
-
-        guard let user = CLLocationManager().location else {
-            // In Simulator: set one via Features → Location → (Apple / Custom Location…)
-            log = "❌ no location fix (Simulator: set Features → Location)"
-            return
-        }
-
-        let μ = 1_000_000.0
-        let userLat = Int64((user.coordinate.latitude  * μ).rounded())
-        let userLon = Int64((user.coordinate.longitude * μ).rounded())
-        let targetLat = Int64((target.latitude  * μ).rounded())
-        let targetLon = Int64((target.longitude * μ).rounded())
-        let radius    = Int64(radiusMeters.rounded())
-
-        let inputs = [
-            String(userLat), String(userLon),
-            String(targetLat), String(targetLon),
-            String(radius)
-        ]
-
-        guard
-            let circuitPath = Bundle.main.path(forResource: "geofence_prover", ofType: "json"),
-            let srsPath     = Bundle.main.path(forResource: "geofence_prover", ofType: "srs")
-        else { log = "❌ missing ACIR/SRS in bundle"; return }
-
-        do {
-            let vk = try ProofVKCache.shared.getVK(
-                circuitPath: circuitPath, srsPath: srsPath,
-                onChain: onChain, lowMem: lowMem
-            )
-            let proof = try generateNoirProof(
-                circuitPath: circuitPath, srsPath: srsPath,
-                inputs: inputs, onChain: onChain, vk: vk, lowMemoryMode: lowMem
-            )
-            let ok = try verifyNoirProof(
-                circuitPath: circuitPath, proof: proof,
-                onChain: onChain, vk: vk, lowMemoryMode: lowMem
-            )
-            log = "✅ proof bytes: \(proof.count) • verified: \(ok)"
-        } catch {
-            log = "❌ \(error)"
+        .searchable(text: $search.query, placement: .navigationBarDrawer(displayMode: .always))
+        .overlay {
+    if phase != .idle {
+        ZStack {
+            Color.black.opacity(0.25).ignoresSafeArea()
+            VStack(spacing: 10) {
+                ProgressView()
+                Text(phase == .locating ? "Getting precise location…" : "Generating proof…")
+                    .font(.callout)
+            }
+            .padding()
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
         }
     }
+}
+.alert(alertTitle, isPresented: $showAlert) {
+    Button("Open Settings") {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+    Button("OK", role: .cancel) {}
+} message: {
+    Text(alertMessage)
+}
+    }
+
+func prove() async {
+    proving = true
+    defer { proving = false }
+
+    let mgr = CLLocationManager()
+    phase = .locating
+
+    // Modern authorization check (instance property; class method is deprecated). :contentReference[oaicite:3]{index=3}
+    let status = mgr.authorizationStatus
+    if status == .notDetermined {
+        mgr.requestWhenInUseAuthorization()
+        try? await Task.sleep(nanoseconds: 800_000_000)
+    }
+    let current = mgr.authorizationStatus
+    if current == .denied || current == .restricted {
+        phase = .idle
+        alertTitle = "Location Disabled"
+        alertMessage = "Enable “While Using” and Precise for this app in Settings to continue."
+        showAlert = true
+        return
+    }
+
+    // Ask for one-time precise if we only have approximate. :contentReference[oaicite:4]{index=4}
+    if mgr.accuracyAuthorization == .reducedAccuracy {
+        await withCheckedContinuation { cc in
+            mgr.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "GeofenceProof") { _ in cc.resume(returning: ()) }
+        }
+    }
+
+    // Wait for a real one-shot fix and handle errors from Core Location. :contentReference[oaicite:5]{index=5}
+    let result: Result<CLLocation, CLError> = await withCheckedContinuation { cc in
+        locGetter.requestResult { cc.resume(returning: $0) }
+    }
+    let user: CLLocation
+    switch result {
+    case .failure(let e):
+        phase = .idle
+        if e.code == .denied {                       // kCLErrorDomain error 1 → denied. :contentReference[oaicite:6]{index=6}
+            alertTitle = "Location Access Denied"
+            alertMessage = "Please allow “While Using” + Precise in Settings."
+        } else {
+            alertTitle = "Location Error"
+            alertMessage = e.localizedDescription
+        }
+        showAlert = true
+        return
+    case .success(let loc):
+        user = loc
+    }
+
+    // Preflight: quick local check before proving (instant “outside radius” feedback).
+    let d = user.distance(from: CLLocation(latitude: target.latitude, longitude: target.longitude))
+    if d > radiusMeters {
+        phase = .idle
+        alertTitle = "Outside Radius"
+        alertMessage = "You are ~\(Int(d)) m away (radius is \(Int(radiusMeters)) m)."
+        showAlert = true
+        return
+    }
+
+    // Ready to prove
+    phase = .proving
+
+    // Convert inputs
+    let μ = 1_000_000.0
+    let userLat   = Int64((user.coordinate.latitude  * μ).rounded())
+    let userLon   = Int64((user.coordinate.longitude * μ).rounded())
+    let targetLat = Int64((target.latitude  * μ).rounded())
+    let targetLon = Int64((target.longitude * μ).rounded())
+    let radius    = Int64(radiusMeters.rounded())
+
+    let inputs = [
+        String(userLat), String(userLon),
+        String(targetLat), String(targetLon),
+        String(radius)
+    ]
+
+    guard
+        let circuitPath = Bundle.main.path(forResource: "geofence_prover", ofType: "json"),
+        let srsPath     = Bundle.main.path(forResource: "geofence_prover", ofType: "srs")
+    else { phase = .idle; log = "❌ missing ACIR/SRS in bundle"; return }
+
+    do {
+        let vk = try ProofVKCache.shared.getVK(
+            circuitPath: circuitPath, srsPath: srsPath,
+            onChain: onChain, lowMem: lowMem
+        )
+        let proof = try generateNoirProof(
+            circuitPath: circuitPath, srsPath: srsPath,
+            inputs: inputs, onChain: onChain, vk: vk, lowMemoryMode: lowMem
+        )
+        let ok = try verifyNoirProof(
+            circuitPath: circuitPath, proof: proof,
+            onChain: onChain, vk: vk, lowMemoryMode: lowMem
+        )
+        phase = .idle
+        log = "✅ proof bytes: \(proof.count) • verified: \(ok)"
+    } catch {
+        phase = .idle
+        log = "❌ \(error)"
+    }
+}
+
+
 }
