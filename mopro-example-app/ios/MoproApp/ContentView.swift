@@ -51,6 +51,11 @@ struct ContentView: View {
                 .onAppear {
                     // ask for when-in-use; simulator requires you to set a fake location
                     locMgr.requestWhenInUseAuthorization()  // must be called before using location services. :contentReference[oaicite:2]{index=2}
+                    
+                    // If we only have When-In-Use, request "Always"
+                    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                        locMgr.requestAlwaysAuthorization()   // may show a second system prompt
+                    }
                 }
                 // tap anywhere to set target (MapReader converts screen point -> coordinate)
                 .gesture(SpatialTapGesture().onEnded { g in
@@ -153,15 +158,25 @@ func prove() async {
     defer { proving = false }
 
     let mgr = CLLocationManager()
+    mgr.allowsBackgroundLocationUpdates = true   // needs Background Modes → Location updates
+    mgr.showsBackgroundLocationIndicator = true  // optional visual indicator when active in bg
+
     phase = .locating
 
     // Modern authorization check (instance property; class method is deprecated). :contentReference[oaicite:3]{index=3}
-    let status = mgr.authorizationStatus
+    let status = CLLocationManager.authorizationStatus()  
     if status == .notDetermined {
         mgr.requestWhenInUseAuthorization()
         try? await Task.sleep(nanoseconds: 800_000_000)
     }
-    let current = mgr.authorizationStatus
+
+    // If we only have When-In-Use, request "Always"
+    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        mgr.requestAlwaysAuthorization()   // may show a second system prompt
+        try? await Task.sleep(nanoseconds: 800_000_000)
+    }
+
+    let current = CLLocationManager.authorizationStatus()
     if current == .denied || current == .restricted {
         phase = .idle
         alertTitle = "Location Disabled"

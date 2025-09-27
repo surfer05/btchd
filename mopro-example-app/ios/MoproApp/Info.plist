@@ -1,7 +1,16 @@
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need your precise location to generate a private proof you are within your chosen radius.</string>
-<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
 <dict>
-  <key>GeofenceProof</key>
-  <string>Precise location is required to prove you are inside the radius without revealing your exact coordinates.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access to prove you are within a specific geofenced area.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs location access to prove you are within a specific geofenced area.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs location access to prove you are within a specific geofenced area.</string>
 </dict>
+</plist>
