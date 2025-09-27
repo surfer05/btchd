@@ -1,4 +1,4 @@
-build_mode = "debug"
+build_mode = "release"
 target_adapters = ["noir"]
 target_platforms = ["ios"]
 ios = [
@@ -6,6 +6,3 @@ ios = [
     "aarch64-apple-ios",
     "aarch64-apple-ios-sim",
 ]
-auto_update = false
-
-[update]

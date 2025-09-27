@@ -22,6 +22,7 @@ struct ContentView: View {
     @State private var showAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""    
+    @State private var hasLoadedInitialLocation = false
 
     private let lowMem = true
     private let onChain = true
@@ -55,6 +56,11 @@ struct ContentView: View {
                     // If we only have When-In-Use, request "Always"
                     if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
                         locMgr.requestAlwaysAuthorization()   // may show a second system prompt
+                    }
+                    
+                    // Load current location on startup
+                    if !hasLoadedInitialLocation {
+                        loadCurrentLocation()
                     }
                 }
                 // tap anywhere to set target (MapReader converts screen point -> coordinate)
@@ -152,6 +158,52 @@ if !search.query.isEmpty && !search.suggestions.isEmpty {
     Text(alertMessage)
 }
     }
+
+func loadCurrentLocation() {
+    hasLoadedInitialLocation = true
+    
+    // Check if we have location permission
+    let status = CLLocationManager.authorizationStatus()
+    if status == .denied || status == .restricted {
+        log = "Location access denied. Using default location."
+        return
+    }
+    
+    // Request location if we don't have permission yet
+    if status == .notDetermined {
+        locMgr.requestWhenInUseAuthorization()
+        // We'll try again after permission is granted
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            loadCurrentLocation()
+        }
+        return
+    }
+    
+    // Get current location
+    Task {
+        let result: Result<CLLocation, CLError> = await withCheckedContinuation { cc in
+            locGetter.requestResult { cc.resume(returning: $0) }
+        }
+        
+        switch result {
+        case .success(let location):
+            DispatchQueue.main.async {
+                // Center map on current location
+                self.position = .region(.init(
+                    center: location.coordinate,
+                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                ))
+                // Set target to current location initially
+                self.target = location.coordinate
+                self.log = "📍 Located at \(String(format: "%.4f", location.coordinate.latitude)), \(String(format: "%.4f", location.coordinate.longitude))"
+            }
+        case .failure(let error):
+            DispatchQueue.main.async {
+                self.log = "❌ Failed to get location: \(error.localizedDescription)"
+            }
+        }
+    }
+}
 
 func prove() async {
     proving = true

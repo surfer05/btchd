@@ -6,11 +6,5 @@
 	<array>
 		<string>location</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs location access to prove you are within a specific geofenced area.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs location access to prove you are within a specific geofenced area.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs location access to prove you are within a specific geofenced area.</string>
 </dict>
 </plist>
