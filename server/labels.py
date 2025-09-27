@@ -1,14 +1,9 @@
-from utils.json_parse import CityData
+from utils.json_parse import get_city_data
 from pathlib import Path
 from geolocation_summarizer.hierarchical_summarizer import summarize_data
 import asyncio
 from utils.args import Args
 
-
-def get_city_data(city):
-    file_path = Path(__file__).parent.parent / "data" / f"{city}.json"
-    city_data = CityData(file_path)
-    return city_data
 
 def generate_city_labels(city, level):
     city_data = get_city_data(city)
@@ -38,7 +33,7 @@ def generate_city_labels(city, level):
             "strength": 1,
         })
     return output
-        
+
 
 def add_city_labes(city, lat, lon, tag):
     city_data = get_city_data(city)

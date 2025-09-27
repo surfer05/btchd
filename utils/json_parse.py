@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 from pathlib import Path
 
+
 class CityData:
     def __init__(self, file_path: str):
         data = read_json_file(file_path)
@@ -41,6 +42,14 @@ def read_json_file(file_path: str):
     except json.JSONDecodeError as e:
         print(f"Error: Invalid JSON format → {e}")
     return None
+
+
+def get_city_data(city):
+    city = city.lower()
+    file_path = Path(__file__).parent.parent / "data" / f"{city}.json"
+    city_data = CityData(file_path)
+    return city_data
+
 
 if __name__ == "__main__":
     file_path = Path(__file__).parent.parent / "data" / "delhi.json"
