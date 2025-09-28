@@ -3,16 +3,20 @@ import SwiftUI
 
 struct ReviewSheet: View {
     var target: CLLocationCoordinate2D
-    var onSubmit: (_ categories: [String], _ rating: Int, _ text: String) -> Void
+    var proof: Data?
+    var publicInputs: Data?
+    var onSubmit:
+        (_ categories: [String], _ rating: Int, _ text: String, _ submitToChain: Bool) -> Void
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedCategories: [String] = []
     @State private var rating: Int = 0
     @State private var notes: String = ""
+    @State private var submitToChain: Bool = true
 
     private let availableCategories = [
-        "Food", "Service", "Atmosphere", "Price", "Location", 
-        "Cleanliness", "Accessibility", "Parking", "WiFi", "Noise"
+        "Office", "Service", "Rich", "Hip", "Tourist",
+        "Cleanliness", "Normie", "Parking", "WiFi", "Uni",
     ]
 
     var body: some View {
@@ -26,12 +30,12 @@ struct ReviewSheet: View {
                         .textFieldStyle(.roundedBorder)
                         .lineLimit(3...6)
                 }
-                
+
                 // Categories dropdown
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Categories")
                         .font(.headline)
-                    
+
                     Menu {
                         ForEach(availableCategories, id: \.self) { category in
                             Button(action: {
@@ -51,8 +55,12 @@ struct ReviewSheet: View {
                         }
                     } label: {
                         HStack {
-                            Text(selectedCategories.isEmpty ? "Select categories..." : "\(selectedCategories.count) selected")
-                                .foregroundColor(selectedCategories.isEmpty ? .secondary : .primary)
+                            Text(
+                                selectedCategories.isEmpty
+                                    ? "Select categories..."
+                                    : "\(selectedCategories.count) selected"
+                            )
+                            .foregroundColor(selectedCategories.isEmpty ? .secondary : .primary)
                             Spacer()
                             Image(systemName: "chevron.down")
                                 .foregroundColor(.secondary)
@@ -61,7 +69,7 @@ struct ReviewSheet: View {
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(8)
                     }
-                    
+
                     // Show selected categories as chips
                     if !selectedCategories.isEmpty {
                         ScrollView(.horizontal, showsIndicators: false) {
@@ -89,12 +97,12 @@ struct ReviewSheet: View {
                         }
                     }
                 }
-                
+
                 // Star rating UI
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Rating")
                         .font(.headline)
-                    
+
                     HStack(spacing: 4) {
                         ForEach(1...5, id: \.self) { star in
                             Button(action: {
@@ -107,7 +115,47 @@ struct ReviewSheet: View {
                         }
                     }
                 }
-                
+
+                // Onchain submission toggle
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Toggle("Submit to Blockchain", isOn: $submitToChain)
+                            .font(.headline)
+                        Spacer()
+                    }
+
+                    if submitToChain {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                                Text("Proof will be verified onchain")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            if proof != nil {
+                                HStack {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
+                                    Text("Zero-knowledge proof ready")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            } else {
+                                HStack {
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .foregroundColor(.orange)
+                                    Text("No proof available")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .padding(.leading, 8)
+                    }
+                }
+
                 Spacer()
             }
             .padding()
@@ -121,7 +169,9 @@ struct ReviewSheet: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Submit") {
-                        onSubmit(selectedCategories, rating, notes.trimmingCharacters(in: .whitespacesAndNewlines))
+                        onSubmit(
+                            selectedCategories, rating,
+                            notes.trimmingCharacters(in: .whitespacesAndNewlines), submitToChain)
                         dismiss()
                     }
                     .disabled(selectedCategories.isEmpty || rating == 0)

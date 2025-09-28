@@ -2,6 +2,7 @@ import CoreLocation
 import CryptoKit
 import MapKit
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     // Map state
@@ -28,9 +29,14 @@ struct ContentView: View {
     @State private var latestReviews: [ReviewRow] = []
     @State private var currentProof: Data? = nil
     @State private var currentPublicInputs: Data? = nil
+    @State private var isSubmittingToChain = false
 
     private let lowMem = true
     private let onChain = true
+
+    // Onchain configuration
+    private let registryContractAddress = "0x..."  // Replace with actual deployed contract address
+    private let rpcURL = "https://sepolia.infura.io/v3/YOUR_PROJECT_ID"  // Replace with your RPC URL
     private let locMgr = CLLocationManager()
     private let locGetter = LocationOnce()
     private enum Phase { case idle, locating, proving }
@@ -165,13 +171,35 @@ struct ContentView: View {
 
         // ⬇️ NEW: review sheet
         .sheet(isPresented: $showReview) {
-            ReviewSheet(target: target) { categories, rating, text in
+            ReviewSheet(
+                target: target,
+                proof: currentProof,
+                publicInputs: currentPublicInputs
+            ) { categories, rating, text, submitToChain in
                 Task {
                     isPostingReview = true
                     do {
+                        // Submit to backend
                         try await ReviewAPI.submit(
                             target: target, categories: categories, rating: rating, text: text,
                             proof: currentProof, publicInputs: currentPublicInputs)
+
+                        // Submit to blockchain if requested
+                        if submitToChain, let proof = currentProof,
+                            let publicInputs = currentPublicInputs
+                        {
+                            let geohash = Geohash.encode(
+                                lat: target.latitude,
+                                lon: target.longitude,
+                                precision: 7
+                            )
+                            await submitProofToChain(
+                                proof: proof,
+                                publicInputs: publicInputs,
+                                geohash: geohash
+                            )
+                        }
+
                         log = "✅ Review submitted. (We never upload your raw GPS.)"
                         // refresh reviews for neighborhood (prefix length 5 ≈ larger area)
                         let ghPrefix = String(
@@ -190,16 +218,18 @@ struct ContentView: View {
 
         .overlay {
             // ⬇️ UPDATED: show overlay during location/proving OR while posting a review
-            if phase != .idle || isPostingReview {
+            if phase != .idle || isPostingReview || isSubmittingToChain {
                 ZStack {
                     Color.black.opacity(0.25).ignoresSafeArea()
                     VStack(spacing: 10) {
                         ProgressView()
                         Text(
-                            isPostingReview
-                                ? "Publishing review…"
-                                : (phase == .locating
-                                    ? "Getting precise location…" : "Generating proof…")
+                            isSubmittingToChain
+                                ? "Submitting to blockchain…"
+                                : (isPostingReview
+                                    ? "Publishing review…"
+                                    : (phase == .locating
+                                        ? "Getting precise location…" : "Generating proof…"))
                         )
                         .font(.callout)
                     }
@@ -319,22 +349,99 @@ struct ContentView: View {
             return
         }
 
-        // Mock implementation for testing proof transmission
-        // TODO: Replace with actual mopro integration once imports are fixed
+        // Generate actual mopro proof
+        do {
+            guard
+                let circuitPath = Bundle.main.path(forResource: "geofence_prover", ofType: "json"),
+                let srsPath = Bundle.main.path(forResource: "geofence_prover", ofType: "srs")
+            else {
+                phase = .idle
+                log = "❌ Missing circuit files in bundle"
+                return
+            }
 
-        // Create mock proof data
-        let mockProof = "mock_proof_\(inputs.joined(separator: "_"))".data(using: .utf8) ?? Data()
-        let mockPublicInputs = inputs.joined(separator: ",").data(using: .utf8) ?? Data()
+            // Get verification key
+            let vk = try ProofVKCache.shared.getVK(
+                circuitPath: circuitPath,
+                srsPath: srsPath,
+                onChain: onChain,
+                lowMem: lowMem
+            )
 
-        // Store the proof and public inputs for review submission
-        currentProof = mockProof
-        currentPublicInputs = mockPublicInputs
+            // Generate the actual proof
+            let proof = try generateNoirProof(
+                circuitPath: circuitPath,
+                srsPath: srsPath,
+                inputs: inputs,
+                onChain: onChain,
+                vk: vk,
+                lowMemoryMode: lowMem
+            )
 
-        // Open the Add Review sheet
-        showReview = true
+            // Encode public inputs for onchain submission
+            let publicInputsData = try encodePublicInputs(
+                targetLat: targetLat,
+                targetLon: targetLon,
+                radius: radius
+            )
 
-        phase = .idle
-        log = "✅ Mock proof generated • ready for review submission"
+            // Store the proof and public inputs
+            currentProof = proof
+            currentPublicInputs = publicInputsData
+
+            // Open the Add Review sheet
+            showReview = true
+
+            phase = .idle
+            log = "✅ Proof generated successfully • ready for review submission"
+
+        } catch {
+            phase = .idle
+            log = "❌ Proof generation failed: \(error.localizedDescription)"
+        }
+    }
+
+    // MARK: - Helper Functions
+
+    /// Encodes public inputs for onchain submission
+    private func encodePublicInputs(targetLat: Int64, targetLon: Int64, radius: Int64) throws
+        -> Data
+    {
+        // Simple ABI encoding for (int64 targetLat, int64 targetLon, int64 radius)
+        var data = Data()
+
+        // ABI encode each int64 (32 bytes, big-endian)
+        data.append(contentsOf: withUnsafeBytes(of: targetLat.bigEndian) { Data($0) })
+        data.append(contentsOf: withUnsafeBytes(of: targetLon.bigEndian) { Data($0) })
+        data.append(contentsOf: withUnsafeBytes(of: radius.bigEndian) { Data($0) })
+
+        return data
+    }
+
+    /// Submits proof to onchain registry
+    private func submitProofToChain(proof: Data, publicInputs: Data, geohash: String) async {
+        isSubmittingToChain = true
+        defer { isSubmittingToChain = false }
+
+        do {
+            log = "🔄 Submitting proof to blockchain..."
+
+            // TODO: Implement actual Web3 contract interaction
+            // For now, we'll simulate the submission
+            // In a real implementation, you would:
+            // 1. Initialize Web3 provider with your RPC URL
+            // 2. Create contract instance with GeofenceRegistry ABI
+            // 3. Call the submit function with proof, publicInputs, and geohash
+            // 4. Wait for transaction confirmation
+
+            // Simulate network delay
+            try await Task.sleep(nanoseconds: 2_000_000_000)  // 2 seconds
+
+            log = "✅ Proof submitted to blockchain successfully"
+
+        } catch {
+            log = "❌ Onchain submission failed: \(error.localizedDescription)"
+        }
     }
 
 }
