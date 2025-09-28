@@ -1,51 +1,48 @@
-import { Marker, Popup } from "react-leaflet";
+// MapLabels.jsx
+import { Marker } from "react-leaflet";
 import L from "leaflet";
 import "./MapLabels.css";
+
+import { scaleSequential } from "d3-scale";
+import { interpolateViridis } from "d3-scale-chromatic";
+const colorScale = scaleSequential(interpolateViridis).domain([0, 1]);
 
 const MapLabels = ({ points }) => {
   if (!points || points.length === 0) return null;
 
-  // Get min and max strength
-  const strengths = points.map((p) => p.strength);
-  const minStrength = Math.min(...strengths);
-  const maxStrength = Math.max(...strengths);
-
-  const minFont = 14; // px
-  const maxFont = 36; // px - increased from 28
+  const minFont = 10; // px
+  const maxFont = 36; // px
 
   // Sort DESCENDING by strength so higher strength overlays lower (appears on top)
-  const sortedPoints = [...points].sort((a, b) => b.strength - a.strength);
+  const sortedPoints = [...points].sort((a, b) => b.confidence - a.confidence);
 
   return (
     <>
       {sortedPoints.map((point, idx) => {
-        // Map strength to font size
-        // Replace norm computation
-        // norm remap to boost top strengths without inflating all labels
-        const raw =
-          maxStrength - minStrength
-            ? (point.strength - minStrength) / (maxStrength - minStrength)
-            : 0;
-        const norm = Math.pow(raw, 1.25); // mild, adjust 1.2–1.4 for effect [web:16][web:10]
+        // Linear font size mapping
+        // If only one point, use maxFont
+        const fontSize =
+          points.length === 1
+            ? maxFont
+            : minFont + (maxFont - minFont) * point.confidence;
+        // Color mapping
+        // const color = interpolateColor(point.confidence);
+        const color = colorScale(point.confidence); // returns a hex color
 
-        // Calculate z-index based on strength (higher strength = higher z-index)
-        const zIndexValue = 1000 + point.strength * 100;
+        // Calculate z-index based on confidence (higher confidence = higher z-index)
+        const zIndexValue = 1000 + point.confidence * 100;
 
         const icon = L.divIcon({
-          // Pass CSS variables; avoid inline font-size so CSS can be responsive
-          html: `<div class="label-text" style="--scale:${norm};--z:${zIndexValue}">${point.label}</div>`,
+          html: `<div class="label-text" style="--fontSize:${fontSize}px;--labelColor:${color};--z:${zIndexValue}">${point.tag}</div>`,
           className: "casual-label",
-          // Let CSS/content drive size & anchor; do not force nulls
-          // iconSize: undefined,
-          // iconAnchor: undefined,
         });
 
         return (
           <Marker
             key={`${point.lat}-${point.lon}-${idx}`}
-            position={[point.lat, point.lon]}
+            position={[point.lat + 0.1, point.lon - 0.1]}
             icon={icon}
-            zIndexOffset={-point.strength * 100}
+            zIndexOffset={-point.confidence * 100}
           />
         );
       })}

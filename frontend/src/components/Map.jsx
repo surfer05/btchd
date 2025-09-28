@@ -1,27 +1,72 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import MapLabels from "./MapLabels";
-import { useFetchData } from "../hooks/useFetchData";
-import ZoomWatcher from "./ZoomWatcher"; // from above
-import { useState } from "react";
+import ZoomWatcher from "./ZoomWatcher";
+import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
+import axios from "axios";
+// import { level0, level1, level2, level3 } from "../../../data/delhi_labels";
 
 const Map = () => {
   const [zoom, setZoom] = useState(13);
+  const [datasets, setDatasets] = useState({
+    level0: [],
+    level1: [],
+    level2: [],
+    level3: [],
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Define data sources per zoom level
-  const getUrlForZoom = (zoom) => {
-    if (zoom < 13)
-      return "https://super-duper-space-waffle-xx49jw799gw3pg7g-5000.app.github.dev/label?city=delhi&level=0";
-    if (zoom < 15)
-      return "https://super-duper-space-waffle-xx49jw799gw3pg7g-5000.app.github.dev/label?city=delhi&level=3";
-    if (zoom < 17)
-      return "https://super-duper-space-waffle-xx49jw799gw3pg7g-5000.app.github.dev/label?city=delhi&level=3";
-    else
-      return "https://super-duper-space-waffle-xx49jw799gw3pg7g-5000.app.github.dev/label?city=delhi&level=3";
+  // ✅ Fetch all datasets only once
+  useEffect(() => {
+    console.log("Fetching datasets...");
+    const fetchAll = async () => {
+      try {
+        const urls = {
+          level0:
+            "https://stunning-parakeet-67q75rwv7pv3rpq-5000.app.github.dev/label?city=delhi&level=0",
+          level1:
+            "https://stunning-parakeet-67q75rwv7pv3rpq-5000.app.github.dev/label?city=delhi&level=1",
+          level2:
+            "https://stunning-parakeet-67q75rwv7pv3rpq-5000.app.github.dev/label?city=delhi&level=2",
+          level3:
+            "https://stunning-parakeet-67q75rwv7pv3rpq-5000.app.github.dev/label?city=delhi&level=3",
+        };
+
+        const results = await Promise.all(
+          Object.entries(urls).map(async ([key, url]) => {
+            const response = await axios.get(url);
+            return [key, response.data.data]; // take only the array
+          })
+        );
+
+        setDatasets(Object.fromEntries(results));
+      } catch (err) {
+        setError(err.message || "Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAll();
+  }, []);
+
+  // ✅ Progressive accumulation of points by zoom
+  const getDataForZoom = (zoom) => {
+    if (!datasets) return [];
+
+    if (zoom < 12) {
+      return datasets.level3;
+    } else if (zoom < 14) {
+      return datasets.level2;
+    } else if (zoom < 16) {
+      return datasets.level1;
+    } else {
+      return datasets.level0;
+    }
   };
 
-  const url = getUrlForZoom(zoom);
-  const { data: points, loading, error } = useFetchData(url);
+  const points = getDataForZoom(zoom);
 
   return (
     <MapContainer
@@ -41,9 +86,25 @@ const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/">OSM</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
       <ZoomWatcher onZoomChange={setZoom} />
-      {!loading && !error && <MapLabels points={points} />}
+      {!loading && !error && points.length > 0 && <MapLabels points={points} />}
+      {/* <MapLabels points={points} /> */}
     </MapContainer>
   );
 };
 
 export default Map;
+
+// let points = level3;
+// // ✅ Progressive accumulation of points by zoom
+// const getDataForZoom = (zoom) => {
+//   if (zoom < 12) {
+//     return (points = level3);
+//   } else if (zoom < 14) {
+//     return (points = level2);
+//   } else if (zoom < 16) {
+//     return (points = level1);
+//   } else {
+//     return (points = level0);
+//   }
+// };
+// points = getDataForZoom(zoom);
